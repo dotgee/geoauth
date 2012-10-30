@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Geoauth::Application.config.secret_token = '0e3767cea8df5ff401657d8dbeaa5025a3cfd4b715cdad1cc1b64f1ee4ee3284bab86540a6957015cb0b6a72c89e1d8b2c83db672f3d78a2d304e0585840a913'
+Geoauth::Application.config.secret_token = 'd348d1ed30d720526aa7a546e27f9f78a4ac5e91305e52be4569220d4ae8b5183e69a9ca8871a2666ccdb409b2839c235a9788d5dd49bb93b0dcd4bf261dbdd2'
