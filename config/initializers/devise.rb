@@ -82,7 +82,29 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = "e3f9532afe09d7ac7ba63c4f952658fbb01d4acdcad34169dc0f017188dde46c303ff18673dce6e077934b44c494c9d84121dfdbf0e7de6766f8c53eac180768"
+  # config.pepper = "c8ee5a85a7813745c5f5b953553d808b8a9cbba1f84c18ad1063c67648662c139fb27cec88da2537f4d53d8dcf6c1c54e928c0b8e2b8e2f527a3fb9439b667cc"
+
+  # ==> Configuration for :invitable
+  # The period the generated invitation token is valid, after
+  # this period, the invited resource won't be able to accept the invitation.
+  # When invite_for is 0 (the default), the invitation won't expire.
+  # config.invite_for = 2.weeks
+
+  # Number of invitations users can send.
+  # If invitation_limit is nil, users can send unlimited invitations.
+  # If invitation_limit is 0, users can't send invitations.
+  # If invitation_limit n > 0, users can send n invitations.
+  # Default: nil
+  # config.invitation_limit = 5
+
+  # The key to be used to check existing users when sending an invitation
+  # and the regexp used to test it when validate_on_invite is not set.
+  # config.invite_key = {:email => /A[^@]+@[^@]+z/}
+  # config.invite_key = {:email => /A[^@]+@[^@]+z/, :username => nil}
+
+  # Flag that force a record to be valid before being actually invited
+  # Default: false
+  # config.validate_on_invite = true
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
