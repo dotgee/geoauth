@@ -82,29 +82,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = "c8ee5a85a7813745c5f5b953553d808b8a9cbba1f84c18ad1063c67648662c139fb27cec88da2537f4d53d8dcf6c1c54e928c0b8e2b8e2f527a3fb9439b667cc"
-
-  # ==> Configuration for :invitable
-  # The period the generated invitation token is valid, after
-  # this period, the invited resource won't be able to accept the invitation.
-  # When invite_for is 0 (the default), the invitation won't expire.
-  # config.invite_for = 2.weeks
-
-  # Number of invitations users can send.
-  # If invitation_limit is nil, users can send unlimited invitations.
-  # If invitation_limit is 0, users can't send invitations.
-  # If invitation_limit n > 0, users can send n invitations.
-  # Default: nil
-  # config.invitation_limit = 5
-
-  # The key to be used to check existing users when sending an invitation
-  # and the regexp used to test it when validate_on_invite is not set.
-  # config.invite_key = {:email => /A[^@]+@[^@]+z/}
-  # config.invite_key = {:email => /A[^@]+@[^@]+z/, :username => nil}
-
-  # Flag that force a record to be valid before being actually invited
-  # Default: false
-  # config.validate_on_invite = true
+  # config.pepper = "759a56439e8db1a9885e0c796449e451b575a6a8b0bcee16c06db6a4d6285ebafff7fd0712ef10e571c9fc418b8fae19e347e9bf5de24f0c5a68a9b2e62588fa"
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
@@ -233,10 +211,11 @@ Devise.setup do |config|
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
   #
-  # config.warden do |manager|
+  config.warden do |manager|
   #   manager.intercept_401 = false
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
-  # end
+     manager.default_strategies(:scope => :user).unshift :spring_security_login
+  end
 
   # ==> Mountable engine configurations
   # When using Devise inside an engine, let's call it `MyEngine`, and this engine
@@ -251,4 +230,21 @@ Devise.setup do |config|
   # When using omniauth, Devise cannot automatically set Omniauth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = "/my_engine/users/auth"
+end
+
+
+Warden::Strategies.add(:spring_security_login) do
+  def valid?
+    # pass the commit parameter as 'login' or something like that, so that this strategy only activates when the user is trying to login
+    params[:username] && params[:password]
+  end
+
+  def authenticate!
+    u = User.find_by_email(params[:username])
+    if u && u.valid_password?(params[:password])
+      success! u
+    else
+      fail! "Account does not have login privilages."
+    end
+  end
 end
