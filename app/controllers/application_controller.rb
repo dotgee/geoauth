@@ -57,7 +57,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  #
+  # Devise specific
   # Overwriting the sign_out redirect path method
+  #
   def after_sign_out_path_for(resource_or_scope)
     if [ '/geoserver/j_spring_security_logout' ].include?(request.env['REQUEST_PATH'])
       return request.env['REQUEST_PATH']

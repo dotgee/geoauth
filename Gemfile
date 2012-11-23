@@ -13,7 +13,7 @@ gem "haml2slim", ">= 0.4.6", :group => :development
 gem "haml", ">= 3.1.6", :group => :development
 gem "haml-rails", ">= 0.3.5", :group => :development
 gem "hpricot", ">= 0.8.6", :group => :development
-gem "ruby_parser", ">= 2.3.1", :group => :development
+# gem "ruby_parser", ">= 2.3.1", :group => :development
 gem "rspec-rails", ">= 2.11.4", :group => [:development, :test]
 gem "capybara", ">= 1.1.2", :group => :test
 gem "email_spec", ">= 1.2.1", :group => :test
@@ -26,3 +26,5 @@ gem "quiet_assets", ">= 1.0.1", :group => :development
 
 gem 'puma'
 
+# gem 'sexp'
+gem 'rolify'

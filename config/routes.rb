@@ -1,4 +1,8 @@
 Geoauth::Application.routes.draw do
+  resources :groups
+
+  resources :roles
+
   devise_for :users
 
   #authenticated :user do
