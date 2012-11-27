@@ -3,7 +3,6 @@
 
   .form-inputs
     = f.input :name
-    = f.input :description
+    = f.input :description, as: :text
 
-  .form-actions
-    = f.button :submit
+  = f.button :wrapped, :cancel => groups_path
