@@ -28,3 +28,4 @@ gem 'puma'
 
 # gem 'sexp'
 gem 'rolify'
+gem 'libv8'
