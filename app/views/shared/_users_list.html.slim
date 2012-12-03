@@ -1,0 +1,23 @@
+table
+  thead
+    tr
+      th
+        #
+      th
+        Username
+      th
+        Name
+      th
+        &nbsp;
+
+  tbody
+    - users.each do |user|
+      tr
+        td
+          = user.id
+        td
+          = user.email
+        td
+          = user.full_name
+        td.actions
+          &nbsp;
