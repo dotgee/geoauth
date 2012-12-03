@@ -42,9 +42,12 @@ class StandardByteDigester
     salt = nil
     if (@use_salt)
       salt = digest[0...@salt_size]
+      puts "extract salt from digest #{@salt_size} |#{salt}|"
     end
 
     encrypted_message = digest_with_salt(message, salt)
+
+    puts "#{salt} |#{Base64.encode64(encrypted_message)}| #{Base64.encode64(digest)}"
 
     return StandardByteDigester.secure_compare(encrypted_message, digest)
   end
@@ -68,7 +71,7 @@ class StandardByteDigester
         digest = @digester.digest
       end
 
-      salt + digest
+      return salt + digest
     end
 end
 
@@ -90,7 +93,7 @@ module Devise
 
         def self.compare(encrypted_password, password, stretches, salt, pepper)
           raise "Unknown password encryptor" unless encrypted_password.match(/^digest1:(.*)/)
-          check_password = $1
+          check_password = encrypted_password.gsub(/^digest1:/, '') # $1
           digester = StandardByteDigester.new(256, stretches, SALT_SIZE)
           digester.matches(password, Base64.decode64(check_password))
         end
