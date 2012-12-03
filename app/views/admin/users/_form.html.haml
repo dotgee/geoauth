@@ -1,7 +1,29 @@
-= simple_form_for(@admin_user) do |f|
+= simple_form_for([ :admin, @user ]) do |f|
   = f.error_notification
 
-  .form-inputs
+  %fieldset
+    .form-inputs
+      = f.input :email, autofocus: true, required: true
+      = f.input :username, hint: 'Leave blank to use email', input_html: { autocomplete: 'off' }
+      = f.input :password, hint: "leave it blank if you don't want to change it", required: false, input_html: { autocomplete: 'off' }
+      = f.input :password_confirmation
+      = f.input :enabled, as: :boolean
+  %fieldset
+    .form-inputs
+      = f.input :first_name
+      = f.input :last_name
 
-  .form-actions
-    = f.button :submit
+  - unless @user.new_record?
+    %fieldset
+      %legend
+        %i.icon-camera
+        Roles
+      = f.association :roles, label: '', as: :check_boxes
+
+    %fieldset
+      %legend
+        %i.icon-camera
+        Groups
+      = f.association :groups, label: '', as: :check_boxes
+
+  = f.button :wrapped, cancel: admin_users_path

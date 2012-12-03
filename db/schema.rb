@@ -11,13 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121122182052) do
+ActiveRecord::Schema.define(:version => 20121130163955) do
 
   create_table "groups", :force => true do |t|
-    t.string   "name",        :null => false
+    t.string   "name",                          :null => false
     t.string   "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "enabled",     :default => true
   end
 
   add_index "groups", ["name"], :name => "index_groups_on_name", :unique => true
@@ -34,6 +35,17 @@ ActiveRecord::Schema.define(:version => 20121122182052) do
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
 
+  create_table "user_props", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "username"
+    t.string   "propname",   :null => false
+    t.string   "propvalue",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "user_props", ["user_id"], :name => "index_user_props_on_user_id"
+
   create_table "user_roles", :force => true do |t|
     t.integer "user_id"
     t.integer "role_id"
@@ -46,15 +58,15 @@ ActiveRecord::Schema.define(:version => 20121122182052) do
   create_table "users", :force => true do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.string   "name"
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
+    t.string   "username",                                 :null => false
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "email",                  :default => "",   :null => false
+    t.string   "encrypted_password",     :default => "",   :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -64,6 +76,7 @@ ActiveRecord::Schema.define(:version => 20121122182052) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "authentication_token"
+    t.boolean  "enabled",                :default => true
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

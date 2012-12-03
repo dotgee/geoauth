@@ -3,5 +3,7 @@ class Group < ActiveRecord::Base
   
   validates :name, presence: true, uniqueness: true
 
-  has_and_belongs_to_many :users, :join_table => :users_groups
+  has_and_belongs_to_many :members,
+                          :class_name => 'User',
+                          :join_table => :users_groups
 end

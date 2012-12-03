@@ -3,13 +3,34 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :encryptable, :encryptor => :byte_digester_encryptor
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessible :first_name, :last_name
+  attr_accessible :username, :enabled, :first_name, :last_name, :role_ids, :group_ids
+
+  #
+  # Fake attribute for devise encryptable
+  #
+  attr_accessor :password_salt
 
   has_and_belongs_to_many :groups, :join_table => :users_groups
+
+  before_save :map_email_to_username
+
+  def full_name
+    [ first_name, last_name ].compact.join(' ')
+  end
+
+
+  def map_email_to_username
+    return true unless respond_to?(:username)
+    if self.username.blank? || (self.email_changed? && self.email_was == self.username)
+      self.username = self.email
+    end
+  end
+    
 
   class << self
     def rolify_hack(options = {})

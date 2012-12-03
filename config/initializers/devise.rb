@@ -4,7 +4,7 @@ Devise.setup do |config|
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class with default "from" parameter.
-  config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
+  config.mailer_sender = "geoauth@dotgee.fr"
 
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
@@ -79,7 +79,10 @@ Devise.setup do |config|
   # Limiting the stretches to just one in testing will increase the performance of
   # your test suite dramatically. However, it is STRONGLY RECOMMENDED to not use
   # a value less than 10 in other environments.
-  config.stretches = Rails.env.test? ? 1 : 10
+  # config.stretches = Rails.env.test? ? 1 : 10
+  #
+  # For geoserver StandardByteDigester compatibility
+  config.stretches = 100000
 
   # Setup a pepper to generate the encrypted password.
   # config.pepper = "759a56439e8db1a9885e0c796449e451b575a6a8b0bcee16c06db6a4d6285ebafff7fd0712ef10e571c9fc418b8fae19e347e9bf5de24f0c5a68a9b2e62588fa"

@@ -1,14 +1,15 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  LOGOUT_PATH = [ '/geoserver/j_spring_security_logout' ]
+  LOGOUT_PATHS = [ '/geoserver/j_spring_security_logout' ]
+  AUTOLOGIN_PATHS = [ '/autologin' ]
 
   def root
 
     #
     # Avoid infinite loop
     #
-    request_path = [ '/', '/login' ].include?(request.env['REQUEST_PATH']) ? '/geoserver/' :  request.env['REQUEST_PATH']
+    request_path = ( [ '/', ] + AUTOLOGIN_PATHS ).include?(request.env['REQUEST_PATH']) ? '/geoserver/' :  request.env['REQUEST_PATH']
 
     #
     # stop if already redirect to /internal
@@ -31,14 +32,19 @@ class ApplicationController < ActionController::Base
         response.headers['X-Authenticated-profile'] = 'Administrator'
       end
     else
+      #
+      # Geonetwork authentication without being authenticated first.
+      # Redirect to autologin path
+      #
       if request_path.starts_with?('/geonetwork/srv/en/shib.user.login')
-        redirect_to '/login' and return
+        redirect_to AUTOLOGIN_PATHS.first and return
       end
     end
 
-    if !user_signed_in? && LOGOUT_PATH.include?(request.env['REQUEST_PATH'])
+    if !user_signed_in? && LOGOUT_PATHS.include?(request.env['REQUEST_PATH'])
       cookies.delete('JSESSIONID', path: '/geoserver')
       cookies.delete('SPRING_SECURITY_REMEMBER_ME_COOKIE', path: '/geoserver')
+      cookies.delete('JSESSIONID', path: '/geonetwork')
     end
     # response.headers['X-Authenticated-User'] = user_signed_in? ? 'xymox' : ''
 
@@ -55,6 +61,17 @@ class ApplicationController < ActionController::Base
     raise ActionController::RoutingError.new('Not Found')
   end
 
+  #
+  # Force logout on every apps
+  #
+  def sso_logout
+    if !user_signed_in?
+      cookies.delete('JSESSIONID', path: '/geoserver')
+      cookies.delete('SPRING_SECURITY_REMEMBER_ME_COOKIE', path: '/geoserver')
+      cookies.delete('JSESSIONID', path: '/geonetwork')
+    end
+  end
+
   private
 
   #
@@ -65,6 +82,11 @@ class ApplicationController < ActionController::Base
     if [ '/geoserver/j_spring_security_logout' ].include?(request.env['REQUEST_PATH'])
       return request.env['REQUEST_PATH']
     end
+    #
+    # It's not the best place to handle full sso logout, but this method
+    # should be called after every logout
+    #
+    sso_logout
     root_path
   end
 
