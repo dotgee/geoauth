@@ -30,4 +30,5 @@ gem 'puma'
 
 # gem 'sexp'
 gem 'rolify'
-gem 'libv8'
+# gem 'libv8'
+gem 'therubyracer'
