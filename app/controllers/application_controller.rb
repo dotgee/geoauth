@@ -99,7 +99,7 @@ class ApplicationController < ActionController::Base
     #
     # spring
     #
-    if request_path.match('/j_spring_security_check') && request.post?
+    if request_path.match('/x_j_spring_security_check') && request.post?
       # user = User.new(email: params[:username], password: params[:password])
       @user = warden.authenticate!(scope: :user, recall: 'devise/sessions#new')
       sign_in(:user, @user)
