@@ -1,28 +1,28 @@
-= simple_form_for([ :admin, @user ]) do |f|
+= simple_form_for([ :admin, @user ], :html => { :class => 'form-horizontal' }) do |f|
   = f.error_notification
 
-  %fieldset
-    .form-inputs
+  fieldset
+    .form-inputs.row
       = f.input :email, autofocus: true, required: true
       = f.input :username, hint: 'Leave blank to use email', input_html: { autocomplete: 'off' }
       = f.input :password, hint: "leave it blank if you don't want to change it", required: false, input_html: { autocomplete: 'off' }
       = f.input :password_confirmation
       = f.input :enabled, as: :boolean
-  %fieldset
-    .form-inputs
+  fieldset
+    .form-inputs.row
       = f.input :first_name
       = f.input :last_name
 
   - unless @user.new_record?
-    %fieldset
-      %legend
-        %i.icon-camera
+    fieldset
+      legend
+        i.icon-camera
         Roles
       = f.association :roles, label: '', as: :check_boxes
 
-    %fieldset
-      %legend
-        %i.icon-camera
+    fieldset
+      legend
+        i.icon-camera
         Groups
       = f.association :groups, label: '', as: :check_boxes
 

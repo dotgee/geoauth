@@ -1,7 +1,4 @@
 Geoauth::Application.routes.draw do
-  resources :groups
-
-  resources :roles
 
   devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout', :sign_up => 'signup' }
 
@@ -11,9 +8,12 @@ Geoauth::Application.routes.draw do
   root :to => "home#root"
 
   match "/autologin" => "auth#root"
+  match "/debug/check" => "home#check"
 
   namespace :admin do
     resources :users
+    resources :groups
+    resources :roles
   end
 
   devise_scope :user do

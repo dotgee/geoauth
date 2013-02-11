@@ -1,6 +1,7 @@
-h1 Listing admin_users
+.page-header
+  h1 Listing Users
 
-table
+table.table.table-stripped
   thead
     tr
       th
@@ -14,7 +15,9 @@ table
     - @users.each do |user|
       tr
         td
-          = user.id
+          = "##{user.id}"
+        td
+          = link_to user.email, edit_admin_user_path(user)
         td
           = user.full_name
         td

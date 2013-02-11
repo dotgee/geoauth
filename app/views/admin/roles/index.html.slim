@@ -1,0 +1,23 @@
+.page-header
+  h1 Listing roles
+
+table.table.table-striped
+  thead
+    tr
+      th Name
+      th Description
+      th
+
+  tbody
+    - @roles.each do |role|
+      tr
+        td= link_to role.name, edit_admin_role_path(role)
+        td= truncate(role.description)
+        td 
+          = link_to 'Show', [ :admin, role ]
+          = link_to 'Edit', edit_admin_role_path(role)
+          = link_to 'Destroy', [ :admin, role ], method: :delete, data: { confirm: 'Are you sure?' }
+
+br
+
+= link_to 'New Role', new_admin_role_path, class: 'btn btn-primary'

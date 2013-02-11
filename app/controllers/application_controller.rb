@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   LOGOUT_PATHS = [ '/geoserver/j_spring_security_logout' ]
   AUTOLOGIN_PATHS = [ '/autologin' ]
 
+  layout :choose_layout
+
   def root
 
     #
@@ -21,7 +23,6 @@ class ApplicationController < ActionController::Base
       true
     end
 
-    response.headers['X-Accel-Redirect'] = "/internal#{[ request_path, request.env['QUERY_STRING'] ].reject { |item| item.blank? }.compact.join('?')}"
     # response.headers['X-Authenticated-User'] = user unless user.nil?
     if user_signed_in?
       # response.headers['X-Authenticated-User'] = user_signed_in? ? current_user.email : ''
@@ -36,7 +37,10 @@ class ApplicationController < ActionController::Base
       # Geonetwork authentication without being authenticated first.
       # Redirect to autologin path
       #
-      if request_path.starts_with?('/geonetwork/srv/en/shib.user.login')
+      # if request_path.starts_with?('/geonetwork/srv/en/shib.user.login')
+      # .login is interpreted as extension.
+      #
+      if request_path.starts_with?('/geonetwork/srv/en/shib.user')
         redirect_to AUTOLOGIN_PATHS.first and return
       end
     end
@@ -47,6 +51,7 @@ class ApplicationController < ActionController::Base
       cookies.delete('JSESSIONID', path: '/geonetwork')
     end
     # response.headers['X-Authenticated-User'] = user_signed_in? ? 'xymox' : ''
+    response.headers['X-Accel-Redirect'] = "/internal#{[ request_path, request.env['QUERY_STRING'] ].reject { |item| item.blank? }.compact.join('?')}"
 
     logger.debug response.headers.inspect
     # logger.debug 'X-Authenticated-User'.downcase.gsub(/\-/, '_')
@@ -56,6 +61,14 @@ class ApplicationController < ActionController::Base
 
 
   protected
+
+  def choose_layout
+    if devise_controller?
+      "login"
+    else
+      "application"
+    end
+  end
 
   def not_found
     raise ActionController::RoutingError.new('Not Found')
