@@ -1,0 +1,8 @@
+= simple_form_for([:admin, @group]) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name, input_html: { class: 'span6' }
+    = f.input :description, as: :text, input_html: { class: 'span6' }
+
+  = f.button :wrapped, :cancel => admin_groups_path

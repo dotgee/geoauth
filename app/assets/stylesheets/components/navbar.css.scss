@@ -1,0 +1,24 @@
+.navbar.backend {
+  .container {
+    width: 1000px;
+  }
+  .nav {
+    > li > a {
+      color: #868686;
+      text-shadow: none;
+      &:hover, &:focus {
+        color: #E6E6E6;
+      }
+    }
+  }
+  .navbar-inner {
+    background: #222222;
+    @include border-radius(0px);
+    border: none;
+    min-height: 50px;
+  }
+}
+
+.navbar .nav > li {
+  line-height: 30px;
+}

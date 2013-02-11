@@ -1,0 +1,31 @@
+$nice_red: #c74451;
+
+html, html {
+  -webkit-font-smoothing: subpixel-antialiased;
+  height: 100%;
+}
+
+body {
+  background-color: white;
+}
+
+.shadow-container {
+  @include box-shadow(rgba(0, 0, 0, 0.1) 0px 0 20px 10px);
+  padding: 20px;
+}
+
+body.flat {
+  background-color: #f5f4ef;
+  padding-top: 120px;
+}
+
+.flat-container {
+  background-color: #fff;
+  padding: 20px;
+
+  h1 {
+    color: $nice_red;
+  }
+    
+}
+

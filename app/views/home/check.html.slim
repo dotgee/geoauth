@@ -1,0 +1,8 @@
+.page-header
+  h1 Check
+
+- if user_signed_in?
+  'You are
+  = current_user.email
+- else
+  'Anonymous user

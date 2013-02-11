@@ -1,0 +1,23 @@
+h1 Listing groups
+
+table.table.table-striped
+  thead
+    tr
+      th #
+      th Name
+      th Description
+      th
+      th
+
+  tbody
+    - @groups.each do |group|
+      tr
+        td= "##{group.id}"
+        td= link_to group.name, admin_group_path(group)
+        td= group.description
+        td= link_to 'Edit', edit_admin_group_path(group)
+        td= link_to 'Destroy', admin_group_path(group), method: :delete, data: { confirm: 'Are you sure?' }
+
+br
+
+= link_to 'New Group', new_admin_group_path, class: 'btn btn-primary'
