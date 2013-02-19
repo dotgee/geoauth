@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130219154146) do
+ActiveRecord::Schema.define(:version => 20130219165633) do
+
+  create_table "group_roles", :force => true do |t|
+    t.integer  "group_id"
+    t.integer  "role_id"
+    t.string   "groupname"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "group_roles", ["group_id", "role_id"], :name => "index_group_roles_on_group_id_and_role_id", :unique => true
+  add_index "group_roles", ["groupname", "role_id"], :name => "index_group_roles_on_groupname_and_role_id", :unique => true
 
   create_table "groups", :force => true do |t|
     t.string   "name",                          :null => false
