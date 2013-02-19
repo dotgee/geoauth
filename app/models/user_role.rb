@@ -13,9 +13,9 @@ class UserRole < ActiveRecord::Base
   private
     def ensure_username
       if self.user
-        self.username = self.user.email
+        self.username = self.user.username
       elsif self.user_id
-        self.username = User.find(self.user_id).email
+        self.username = User.find(self.user_id).username
       end
     end
 end
