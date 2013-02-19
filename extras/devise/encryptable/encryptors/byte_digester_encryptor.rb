@@ -42,12 +42,12 @@ class StandardByteDigester
     salt = nil
     if (@use_salt)
       salt = digest[0...@salt_size]
-      puts "extract salt from digest #{@salt_size} |#{salt}|"
+      # puts "extract salt from digest #{@salt_size} |#{salt}|"
     end
 
     encrypted_message = digest_with_salt(message, salt)
 
-    puts "#{salt} |#{Base64.encode64(encrypted_message)}| #{Base64.encode64(digest)}"
+    # puts "#{salt} |#{Base64.encode64(encrypted_message)}| #{Base64.encode64(digest)}"
 
     return StandardByteDigester.secure_compare(encrypted_message, digest)
   end
@@ -55,7 +55,6 @@ class StandardByteDigester
   private
     def random_salt
       salt = (0...@salt_size).map{ ('a'..'z').to_a[rand(26)] }.join
-      puts salt
       salt
     end
 

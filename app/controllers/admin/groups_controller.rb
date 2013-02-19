@@ -15,6 +15,7 @@ module Admin
     # GET /groups/1.json
     def show
       @group = Group.find(params[:id])
+      @members = @group.members.order(:email).page(params[:page]).per(params[:per])
   
       respond_to do |format|
         format.html # show.html.erb

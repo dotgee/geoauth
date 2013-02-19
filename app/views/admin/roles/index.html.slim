@@ -11,12 +11,12 @@ table.table.table-striped
   tbody
     - @roles.each do |role|
       tr
-        td= link_to role.name, edit_admin_role_path(role)
+        td= link_to role.name, admin_role_path(role)
         td= truncate(role.description)
         td 
-          = link_to 'Show', [ :admin, role ]
-          = link_to 'Edit', edit_admin_role_path(role)
-          = link_to 'Destroy', [ :admin, role ], method: :delete, data: { confirm: 'Are you sure?' }
+          = link_to 'Edit', edit_admin_role_path(role), class: 'btn btn-mini btn-primary'
+          |  
+          = link_to 'Destroy', [ :admin, role ], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-mini btn-danger'
 
 br
 

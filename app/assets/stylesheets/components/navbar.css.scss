@@ -19,6 +19,40 @@
   }
 }
 
-.navbar .nav > li {
-  line-height: 30px;
+header {
+  .xaccount-box {
+    position: absolute;
+    right: 0;
+    top: 6px;
+    width: 128px;
+    float: right;
+    display: block;
+    cursor: pointer;
+  }
+  .account-box {
+    line-height: 28px;
+    img {
+      width: 28px;
+      height: 28px;
+    }
+    img.abs {
+      position: absolute;
+      top: 1px;
+      right: 5px;
+    }
+  }
+}
+
+.navbar, .navbar-inverse {
+  .brand {
+    color: white;
+    a {
+      color: white;
+    }
+  }
+
+  .nav > li.account-box > a {
+    margin: 0;
+    padding: 6px 15px 6px;
+  }
 }

@@ -63,11 +63,12 @@ class ApplicationController < ActionController::Base
   protected
 
   def choose_layout
-    if devise_controller?
-      "login"
-    else
-      "application"
-    end
+    #if devise_controller? && [ :sign_in, :login ].include?(action_name.to_sym)
+    #  "login"
+    #else
+    #  "application"
+    #end
+    "application"
   end
 
   def not_found

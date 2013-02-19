@@ -15,7 +15,8 @@ module Admin
     # GET /roles/1.json
     def show
       @role = Role.find(params[:id])
-  
+      @members = @role.users.order(:email).page(params[:page]).per(params[:per])
+
       respond_to do |format|
         format.html # show.html.erb
         format.json { render json: @role }

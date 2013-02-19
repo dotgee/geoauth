@@ -1,4 +1,4 @@
-table
+table.table
   thead
     tr
       th
@@ -8,7 +8,7 @@ table
       th
         Name
       th
-        &nbsp;
+        |  
 
   tbody
     - users.each do |user|
@@ -20,4 +20,4 @@ table
         td
           = user.full_name
         td.actions
-          &nbsp;
+          |  

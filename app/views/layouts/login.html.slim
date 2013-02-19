@@ -11,8 +11,10 @@ html
   body
     #main role="main"
       .container
-        = render 'layouts/messages'
-        = yield
+        .login-wrapper
+          .messages
+            = render 'layouts/messages'
+          = yield
         footer
       /! ! end of .container
     /! ! end of #main

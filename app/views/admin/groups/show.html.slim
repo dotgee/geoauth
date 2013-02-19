@@ -1,0 +1,20 @@
+p#notice= notice
+
+table.table
+  tbody
+    tr
+      td
+        b Name:
+      td
+        = @group.name
+    tr
+      td
+        b Description:
+      td
+        = @group.description
+
+- if @members.any?
+  = render partial: 'admin/shared/users_list', locals: { users: @members }
+= link_to 'edit', edit_admin_group_path(@group), class: 'btn btn-primary'
+|  or 
+= link_to 'back', admin_groups_path

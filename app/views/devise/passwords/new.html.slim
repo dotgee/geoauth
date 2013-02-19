@@ -1,0 +1,13 @@
+= devise_error_messages!
+.devise-form.password-recovery
+  h2.logo
+    img(src='https://assetcache.harvestapp.com/uploads/logos/0011/7228/logo_dotgee-screen.jpg?1352812093')
+  .form-container
+    = simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
+      = f.error_notification
+      = f.input :email, autofocus: true, label: 'What email address do you use to sign in?', required: true
+      = f.button :submit, 'Submit', class: 'btn-primary'
+    p
+     = link_to "back to sign in", new_session_path(resource_name)
+.login-footer
+  = render "devise/shared/links"

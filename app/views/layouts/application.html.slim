@@ -9,7 +9,7 @@ html
     = stylesheet_link_tag "application", :media => "all"
     = csrf_meta_tags
     = yield(:head)
-  body.flat
+  body.xflat
     #wrap
       header.navbar.navbar-inverse.navbar-fixed-top
         nav.navbar-inner
@@ -23,9 +23,11 @@ html
                 = render 'layouts/messages'
                 = yield
         /! ! end of .container
-        #push
       /! ! end of #main
+      #push
     footer
       .container
+        .row
+          = render 'layouts/footer'
   = javascript_include_tag "application"
   = yield :javascripts

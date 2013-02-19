@@ -1,19 +1,31 @@
+$footer_h: 180px;
+
 #wrap {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin: 0 auto -180px;
+  /* Negative indent footer by ti's height */
+  margin: 0 auto (-$footer_h);
 }
 
 #push {
-  height: 180px;
+  height: $footer_h;
 }
 
 footer {
   background: #222222;
-  padding-top: 20px;
   color: #868686;
-  img {
-    margin-bottom: 20px;
+  height: $footer_h;
+  .row {
+    padding-top: 20px;
+    img {
+      margin-bottom: 20px;
+    }
+  }
+
+  a {
+    &, &:link, &:visited, &:hover {
+      color: #868686;
+    }
   }
 }

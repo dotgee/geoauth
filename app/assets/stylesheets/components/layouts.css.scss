@@ -7,6 +7,8 @@ html, html {
 
 body {
   background-color: white;
+  height: 100%;
+  padding-top: 60px;
 }
 
 .shadow-container {
@@ -16,16 +18,12 @@ body {
 
 body.flat {
   background-color: #f5f4ef;
-  padding-top: 120px;
+  padding-top: 60px;
 }
 
 .flat-container {
   background-color: #fff;
   padding: 20px;
 
-  h1 {
-    color: $nice_red;
-  }
-    
 }
 
