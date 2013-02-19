@@ -10,11 +10,14 @@
  *
  *= require_self
  *= require_tree ./all
- *= require ./components/components
  *= require font-awesome
  *= require dataTables/jquery.dataTables.bootstrap
 */
 
+@import "bootstrap";
+@import "components/footer";
+@import "components/layouts";
+@import "components/navbar";
 
 .xcontent {
   background-color: #eee;
