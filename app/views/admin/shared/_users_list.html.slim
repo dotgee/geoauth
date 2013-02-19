@@ -1,0 +1,27 @@
+table#users_list.table.table-stripped
+  thead
+    tr
+      th
+        | #
+      th
+        | Email
+      th
+        | Name
+      th
+        |  
+
+  tbody
+    - users.each do |user|
+      tr
+        td
+          = "##{user.id}"
+        td
+          = link_to user.email, edit_admin_user_path(user)
+        td
+          = user.full_name
+        td
+          = link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-mini btn-primary'
+          |  
+          = link_to 'Destroy', admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-mini btn-danger'
+
+= paginate users
