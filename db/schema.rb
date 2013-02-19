@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130219111831) do
+ActiveRecord::Schema.define(:version => 20130219154146) do
 
   create_table "groups", :force => true do |t|
     t.string   "name",                          :null => false
@@ -23,6 +23,17 @@ ActiveRecord::Schema.define(:version => 20130219111831) do
 
   add_index "groups", ["name"], :name => "index_groups_on_name", :unique => true
 
+  create_table "role_props", :force => true do |t|
+    t.integer  "role_id"
+    t.string   "rolename",   :null => false
+    t.string   "propname",   :null => false
+    t.string   "propvalue",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "role_props", ["role_id"], :name => "index_role_props_on_role_id"
+
   create_table "roles", :force => true do |t|
     t.string   "name"
     t.integer  "resource_id"
@@ -30,6 +41,7 @@ ActiveRecord::Schema.define(:version => 20130219111831) do
     t.string   "description"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.string   "parent"
   end
 
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
