@@ -11,11 +11,6 @@ body {
   color: #333;
 }
 
-h1 {
-  font: 300 40px/23px "lato";
-  letter-spacing: -2px;
-  text-transform: uppercase;
-}
 .shadow-container {
   @include box-shadow(rgba(0, 0, 0, 0.1) 0px 0 20px 10px);
   padding: 20px;
