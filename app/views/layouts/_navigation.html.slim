@@ -1,7 +1,5 @@
 = link_to root_path, :class => 'brand' do
-  |Geo
-  i.icon-lock style="margin: 0 1px;"
-  |uth
+  = image_tag "geoauth.png", :width => "126", :height => "30"
 .nav-collapse.collapse
   - if user_signed_in?
     ul.nav
