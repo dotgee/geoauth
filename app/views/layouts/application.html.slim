@@ -2,11 +2,9 @@ doctype 5
 html
   head
     meta charset="utf-8"
-    meta content="width=(device-width,)initial-scale=1.0" name="viewport"
     meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"
     title= content_for?(:title) ? yield(:title) : "Geoauth"
     meta content=(content_for?(:description) ? yield(:description) : "Geoauth") name="description"
-    = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Open+Sans", :media => "all"
     = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Lato:100,900"
     = stylesheet_link_tag :application, :media => "all"
     = csrf_meta_tags
@@ -20,10 +18,8 @@ html
       #main role="main"
         .container.flat-container
           .content
-            .row
-              .span12
-                = render 'layouts/messages'
-                = yield
+            = render 'layouts/messages'
+            = yield
         /! ! end of .container
       /! ! end of #main
       #push
