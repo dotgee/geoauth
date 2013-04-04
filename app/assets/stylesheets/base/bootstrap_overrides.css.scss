@@ -16,3 +16,7 @@
     padding-left: 15px;
   }
 }
+
+.alert {
+  @include border-radius(0px);
+}

@@ -16,9 +16,10 @@ html
           .container
             = render 'layouts/navigation'
       #main role="main"
+        .container
+          = render 'layouts/messages'
         .container.flat-container
           .content
-            = render 'layouts/messages'
             = yield
         /! ! end of .container
       /! ! end of #main
