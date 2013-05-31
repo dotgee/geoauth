@@ -59,10 +59,10 @@ module Admin
     def update
       @user = User.find(params[:id])
   
-      if params[:password].blank?
-        result = @user.update_without_password(params[:user])
-      else
+      if params[:user] && !params[:user][:password].blank?
         result = @user.update_attributes(params[:user])
+      else
+        result = @user.update_without_password(params[:user])
       end
 
       respond_to do |format|

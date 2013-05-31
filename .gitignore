@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #----------------------------------------------------------------------------
 # Ignore these files when commiting to a git repository.
 #
@@ -94,3 +93,5 @@ tmp
 .yardoc
 _yardoc
 doc/
+
+Gemfile.lock

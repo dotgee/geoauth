@@ -42,6 +42,7 @@ gem "simple_form", ">= 2.0.4"
 gem "quiet_assets", ">= 1.0.1", :group => :development
 
 gem 'puma'
+gem 'god'
 
 # gem 'sexp'
 gem 'rolify'
