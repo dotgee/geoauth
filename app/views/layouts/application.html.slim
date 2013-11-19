@@ -21,7 +21,11 @@ html
           = render 'layouts/messages'
         .container.flat-container
           .content
-            = yield
+            .row
+              .span3
+                = render "layouts/aside"
+              .span9
+                = yield
         /! ! end of .container
       /! ! end of #main
       #push
