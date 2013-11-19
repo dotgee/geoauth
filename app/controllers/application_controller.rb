@@ -11,7 +11,9 @@ class ApplicationController < ActionController::Base
     #
     # Avoid infinite loop
     #
+#    user_return_to = user_signed_in? ? (stored_location_for(current_user).nil? ? "/geonetwork/srv/fre/main.home" : stored_location_for(current_user)) :  request.env['REQUEST_PATH']
     request_path = ( [ '/', ] + AUTOLOGIN_PATHS ).include?(request.env['REQUEST_PATH']) ? '/geoserver/' :  request.env['REQUEST_PATH']
+#    request_path = ( [ '/', ] + AUTOLOGIN_PATHS ).include?(request.env['REQUEST_PATH']) ? user_return_to  :  request.env['REQUEST_PATH']
 
     #
     # stop if already redirect to /internal
@@ -28,9 +30,12 @@ class ApplicationController < ActionController::Base
       # response.headers['X-Authenticated-User'] = user_signed_in? ? current_user.email : ''
       response.headers['X-Authenticated-User'] = current_user.email
       if request_path.starts_with?('/geonetwork')
+        geonetwork_user = GeonetworkUser.by_username(current_user.email).first
+
         response.headers['X-Authenticated-lastname'] = current_user.last_name
         response.headers['X-Authenticated-firstname'] = current_user.first_name
-        response.headers['X-Authenticated-profile'] = 'Administrator'
+        response.headers['X-Authenticated-profile'] = geonetwork_user.nil? ? 'RegisteredUser' : geonetwork_user.profile
+        response.headers['X-Authenticated-group'] = 'Users'
       end
     else
       #
@@ -41,7 +46,7 @@ class ApplicationController < ActionController::Base
       # .login is interpreted as extension.
       #
       if request_path.starts_with?('/geonetwork/srv/en/shib.user')
-        redirect_to AUTOLOGIN_PATHS.first and return
+       	redirect_to AUTOLOGIN_PATHS.first and return
       end
     end
 

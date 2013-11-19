@@ -1,0 +1,22 @@
+@import "bootstrap";
+@import "bootstrap-responsive";
+
+.hero-unit {
+  @include border-radius(0px);
+}
+
+.form-actions {
+  border: none;
+  background-color: $grey;
+  padding: {
+    top: 5px;
+    bottom: 15px;
+  }
+  &.nopadding {
+    padding-left: 15px;
+  }
+}
+
+.alert {
+  @include border-radius(0px);
+}

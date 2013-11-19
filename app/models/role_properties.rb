@@ -1,5 +1,5 @@
 class RoleProperties < ActiveRecord::Base
-  self.table_name :role_props
+  set_table_name :role_props
 
   belongs_to :role
 

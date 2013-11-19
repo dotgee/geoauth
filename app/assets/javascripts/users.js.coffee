@@ -1,6 +1,7 @@
 jQuery ->
   $('#users').dataTable
     sPaginationType: "full_numbers"
+    "bAutoWidth": false
     bJQueryUI: true
     bProcessing: true
     bServerSide: true

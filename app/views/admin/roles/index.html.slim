@@ -14,10 +14,10 @@ table.table.table-striped
         td= link_to role.name, admin_role_path(role)
         td= truncate(role.description)
         td 
-          = link_to 'Edit', edit_admin_role_path(role), class: 'btn btn-mini btn-primary'
+          = link_to 'Edit', edit_admin_role_path(role), class: 'm-btn mini blue-stripe'
           |  
-          = link_to 'Destroy', [ :admin, role ], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-mini btn-danger'
+          = link_to 'Destroy', [ :admin, role ], method: :delete, data: { confirm: 'Are you sure?' }, class: 'm-btn mini red-stripe'
 
 br
 
-= link_to 'New Role', new_admin_role_path, class: 'btn btn-primary'
+= link_to 'New Role', new_admin_role_path, class: 'm-btn blue'

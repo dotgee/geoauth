@@ -1,4 +1,5 @@
-h1 Listing groups
+.page-header
+  h1 Listing groups
 
 table.table.table-striped
   thead
@@ -18,10 +19,10 @@ table.table.table-striped
           = "(#{group.members.count})"
         td= group.description
         td
-          = link_to 'Edit', edit_admin_group_path(group), class: 'btn btn-mini btn-primary'
+          = link_to 'Edit', edit_admin_group_path(group), class: 'm-btn mini blue-stripe'
           |  
-          = link_to 'Destroy', admin_group_path(group), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-mini btn-danger'
+          = link_to 'Destroy', admin_group_path(group), method: :delete, data: { confirm: 'Are you sure?' }, class: 'm-btn mini red-stripe'
 
 br
 
-= link_to 'New Group', new_admin_group_path, class: 'btn btn-primary'
+= link_to 'New Group', new_admin_group_path, class: 'm-btn blue'

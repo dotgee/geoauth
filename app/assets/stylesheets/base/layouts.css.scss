@@ -1,16 +1,13 @@
-@import "bootstrap";
-
-$nice_red: #c74451;
-
 html, html {
   -webkit-font-smoothing: subpixel-antialiased;
   height: 100%;
 }
 
 body {
-  background-color: white;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   height: 100%;
-  padding-top: 60px;
+  color: #333;
+  background-color: $grey;
 }
 
 .shadow-container {
@@ -19,7 +16,6 @@ body {
 }
 
 body.flat {
-  background-color: #f5f4ef;
   padding-top: 60px;
 }
 
@@ -28,4 +24,3 @@ body.flat {
   padding: 20px;
 
 }
-

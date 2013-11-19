@@ -22,7 +22,7 @@ class UsersDatatable
         "##{resource.id}",
         link_to(resource.email, edit_admin_user_path(resource)),
         h(resource.full_name),
-        [ link_to('Edit', edit_admin_user_path(resource), class: 'btn btn-mini btn-primary'), '|', link_to('Destroy', admin_user_path(resource), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-mini btn-danger') ].join(' ')
+        [ link_to('Edit', edit_admin_user_path(resource), class: 'm-btn mini blue-stripe'), link_to('Destroy', admin_user_path(resource), method: :delete, data: { confirm: 'Are you sure?' }, class: 'm-btn mini red-stripe') ].join(' ')
       ]
     end
   end

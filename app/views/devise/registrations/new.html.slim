@@ -1,20 +1,18 @@
 = devise_error_messages!
 .devise-form.signup
   .form-signup
-    = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:class => 'form-horizontal' }) do |f|
+    = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:class => 'form-horizontal' },  defaults: { input_html: { class: 'm-wrap input-block-level' } }) do |f|
       = f.error_notification
-      fieldset
-        legend
-          i.icon-user
-          |  About you
+      .page-header
+        h1 About you
+
+      p.small Inscription obligatoire pour b&eacute;n&eacute;ficier de tous les avantages de la plateforme.
       = f.input :first_name, :autofocus => true
       = f.input :last_name
       = f.input :email, :required => true
       = f.input :password, :required => true
       = f.input :password_confirmation, :required => true
-      .form-actions
-        = f.button :submit, 'Sign up', :class => 'btn-primary'
-  .hero-unit
-    | Inscription obligatoire pour b&eacute;n&eacute;ficier de tous les avantages de la plateforme.
+      .form-actions.nopadding
+        = f.button :submit, 'Sign up', class: "pull-right"
 .login-footer
   = render "devise/shared/links"
