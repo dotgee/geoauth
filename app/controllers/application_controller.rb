@@ -36,6 +36,10 @@ class ApplicationController < ActionController::Base
         response.headers['X-Authenticated-firstname'] = current_user.first_name
         response.headers['X-Authenticated-profile'] = geonetwork_user.nil? ? 'RegisteredUser' : geonetwork_user.profile
         response.headers['X-Authenticated-group'] = 'Users'
+	if !session["geonetwork_connected"]
+          session["geonetwork_connected"] = true
+	  redirect_to "/geonetwork/srv/en/shib.user.login" and return
+	end
       end
     else
       #
@@ -46,11 +50,15 @@ class ApplicationController < ActionController::Base
       # .login is interpreted as extension.
       #
       if request_path.starts_with?('/geonetwork/srv/en/shib.user')
+	session["geouser_return_to"] = request_path
+        session["geonetwork_connected"] = true
+	# store_location!
        	redirect_to AUTOLOGIN_PATHS.first and return
       end
     end
 
     if !user_signed_in? && LOGOUT_PATHS.include?(request.env['REQUEST_PATH'])
+      session.delete("geonetwork_connected")
       cookies.delete('JSESSIONID', path: '/geoserver')
       cookies.delete('SPRING_SECURITY_REMEMBER_ME_COOKIE', path: '/geoserver')
       cookies.delete('JSESSIONID', path: '/geonetwork')
@@ -85,6 +93,7 @@ class ApplicationController < ActionController::Base
   #
   def sso_logout
     if !user_signed_in?
+      session.delete("geonetwork_connected")
       cookies.delete('JSESSIONID', path: '/geoserver')
       cookies.delete('SPRING_SECURITY_REMEMBER_ME_COOKIE', path: '/geoserver')
       cookies.delete('JSESSIONID', path: '/geonetwork')
@@ -109,6 +118,10 @@ class ApplicationController < ActionController::Base
     root_path
   end
 
+  def after_sign_in_path_for(resource_or_scope)
+    geonetwork_path = session.delete("geouser_return_to")
+    geonetwork_path || stored_location_for(resource_or_scope) || signed_in_root_path(resource_or_scope)
+  end
 
   def internal_path?
     request_path.starts_with?('/internal')
