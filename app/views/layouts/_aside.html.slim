@@ -1,0 +1,13 @@
+ul.nav.nav-list.sidenav data-spy="affix"
+  li class="#{current_page?(admin_users_path) ? "active" : ""}"
+    = link_to admin_users_path do
+      i.icon-chevron-right
+      |Users
+  li class="#{current_page?(admin_roles_path) ? "active" : ""}"
+    = link_to admin_roles_path do
+      i.icon-chevron-right
+      |Roles
+  li class="#{current_page?(admin_groups_path) ? "active" : ""}"
+    = link_to admin_groups_path do
+      i.icon-chevron-right
+      |Groups
