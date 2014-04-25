@@ -1,11 +1,15 @@
+require 'curb'
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  LOGOUT_PATHS = [ '/geoserver/j_spring_security_logout' ]
+  LOGOUT_PATHS = [ '/geoserver/xj_spring_security_logout' ]
   AUTOLOGIN_PATHS = [ '/autologin' ]
+
+  LOGOUT_CALLBACKS = [ 'geoserver', 'geonetwork' ]
 
   layout :choose_layout
 
+  after_filter :store_location
   def root
 
     #
@@ -49,6 +53,7 @@ class ApplicationController < ActionController::Base
     end
 
     if !user_signed_in? && LOGOUT_PATHS.include?(request.env['REQUEST_PATH'])
+      sso_logout
       cookies.delete('JSESSIONID', path: '/geoserver')
       cookies.delete('SPRING_SECURITY_REMEMBER_ME_COOKIE', path: '/geoserver')
       cookies.delete('JSESSIONID', path: '/geonetwork')
@@ -58,19 +63,34 @@ class ApplicationController < ActionController::Base
 
     logger.debug response.headers.inspect
     # logger.debug 'X-Authenticated-User'.downcase.gsub(/\-/, '_')
-
     render :nothing => true
   end
 
+ # def geonetwork_logout
+  #  cookies.delete('JSESSIONID', path: '/geonetwork/')
+  #  sso_logout
+ # end
+
+  def autologout
+    session[:return_to] ||= request.referer
+    redirect_to "/#{LOGOUT_CALLBACKS.first}/logout"
+  end
+
+
+  def logout_callback
+    session[:next_callback] = LOGOUT_CALLBACKS[LOGOUT_CALLBACKS.index(params[:callback]) + 1]
+    cookies.delete('SPRING_SECURITY_REMEMBER_ME_COOKIE', path: "/#{params[:callback]}")
+    cookies.delete('JSESSIONID', path: "/#{params[:callback]}")
+    if !session[:next_callback].blank?
+      redirect_to "/#{session[:next_callback]}/logout" and return
+    else
+      redirect_to destroy_user_session_path
+    end
+  end
 
   protected
 
   def choose_layout
-    #if devise_controller? && [ :sign_in, :login ].include?(action_name.to_sym)
-    #  "login"
-    #else
-    #  "application"
-    #end
     "application"
   end
 
@@ -81,13 +101,20 @@ class ApplicationController < ActionController::Base
   #
   # Force logout on every apps
   #
-  def sso_logout
-    if !user_signed_in?
-      cookies.delete('JSESSIONID', path: '/geoserver')
-      cookies.delete('SPRING_SECURITY_REMEMBER_ME_COOKIE', path: '/geoserver')
-      cookies.delete('JSESSIONID', path: '/geonetwork')
-    end
-  end
+  #def sso_logout
+  #  if true or !user_signed_in?
+    # logger.debug "In sso logout"
+  #   cookies.each do |c|
+  #     logger.debug c.inspect
+  #   end
+     #cookies.delete('SPRING_SECURITY_REMEMBER_ME_COOKIE', path: '/geoserver')
+     #cookies.delete('JSESSIONID', path: '/geonetwork/')
+     #cookies.delete('JSESSIONID', path: '/geoserver')
+     #cookies.delete('_geoauth_session', path: '/')
+     #cookies.delete('_session_id', path: '/')
+  #  end
+  #end
+
 
   private
 
@@ -95,18 +122,11 @@ class ApplicationController < ActionController::Base
   # Devise specific
   # Overwriting the sign_out redirect path method
   #
-  def after_sign_out_path_for(resource_or_scope)
-    if [ '/geoserver/j_spring_security_logout' ].include?(request.env['REQUEST_PATH'])
-      return request.env['REQUEST_PATH']
-    end
-    #
-    # It's not the best place to handle full sso logout, but this method
-    # should be called after every logout
-    #
-    sso_logout
-    root_path
+	
+  def after_sign_out_path_for(resource_or_scope) 
+    #logger.debug"#{:return_to}"
+    return session[:return_to]
   end
-
 
   def internal_path?
     request_path.starts_with?('/internal')
@@ -125,5 +145,25 @@ class ApplicationController < ActionController::Base
 
   def request_path
     request.env['REQUEST_PATH']
+  end
+
+  def store_location
+    unless request.fullpath =~/\/(autologin|login|admin)/
+      session[:previous_url] = request.fullpath unless request.fullpath =~/\/(autologin|login|admin)/
+      #logger.debug "store_location: #{request.fullpath}"
+    end
+    #logger.debug "out : #{request.fullpath}"
+  end
+
+  def after_sign_in_path_for(resource)
+    session[:previous_url] || root_path
+  end
+
+  ### def after_sign_out_path_for(resource)
+  ###   session[:previous_url] || root_path
+  ### end
+
+  def after_update_path_for(resource)
+    session[:previous_url] || root_path
   end
 end

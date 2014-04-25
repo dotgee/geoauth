@@ -15,7 +15,7 @@ module Geoauth
     # don't generate RSpec tests for views and helpers
     config.generators do |g|
       
-      g.test_framework :rspec, fixture: true
+      g.test_framework :rspec, :fixture => true
       g.fixture_replacement :factory_girl
       
       
@@ -72,6 +72,8 @@ module Geoauth
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    config.cache_store = :dalli_store
 
     config.to_prepare do
       Devise::SessionsController.layout "login"

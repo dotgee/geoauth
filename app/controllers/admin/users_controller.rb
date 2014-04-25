@@ -9,6 +9,7 @@ module Admin
         format.html # index.html.erb
         format.json { render json: UsersDatatable.new(view_context) }
       end
+      #raise request.inspect
     end
   
     # GET /admin/users/1
@@ -81,7 +82,6 @@ module Admin
     def destroy
       @user = User.find(params[:id])
       @user.destroy
-  
       respond_to do |format|
         format.html { redirect_to admin_users_url }
         format.json { head :no_content }
