@@ -13,6 +13,16 @@
 
 ActiveRecord::Schema.define(:version => 20130219165633) do
 
+  create_table "geometry_columns", :id => false, :force => true do |t|
+    t.string  "f_table_catalog",   :limit => 256, :null => false
+    t.string  "f_table_schema",    :limit => 256, :null => false
+    t.string  "f_table_name",      :limit => 256, :null => false
+    t.string  "f_geometry_column", :limit => 256, :null => false
+    t.integer "coord_dimension",                  :null => false
+    t.integer "srid",                             :null => false
+    t.string  "type",              :limit => 30,  :null => false
+  end
+
   create_table "group_roles", :force => true do |t|
     t.integer  "group_id"
     t.integer  "role_id"

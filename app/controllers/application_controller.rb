@@ -11,9 +11,9 @@ class ApplicationController < ActionController::Base
     #
     # Avoid infinite loop
     #
-#    user_return_to = user_signed_in? ? (stored_location_for(current_user).nil? ? "/geonetwork/srv/fre/main.home" : stored_location_for(current_user)) :  request.env['REQUEST_PATH']
     request_path = ( [ '/', ] + AUTOLOGIN_PATHS ).include?(request.env['REQUEST_PATH']) ? '/geoserver/' :  request.env['REQUEST_PATH']
-#    request_path = ( [ '/', ] + AUTOLOGIN_PATHS ).include?(request.env['REQUEST_PATH']) ? user_return_to  :  request.env['REQUEST_PATH']
+#    request_path = request_path || request.original_url 
+    logger.info request_path
 
     #
     # stop if already redirect to /internal
@@ -25,12 +25,10 @@ class ApplicationController < ActionController::Base
       true
     end
 
-    # response.headers['X-Authenticated-User'] = user unless user.nil?
     if user_signed_in?
-      # response.headers['X-Authenticated-User'] = user_signed_in? ? current_user.email : ''
       response.headers['X-Authenticated-User'] = current_user.email
       if request_path.starts_with?('/geonetwork')
-        geonetwork_user = GeonetworkUser.by_username(current_user.email).first
+        geonetwork_user = GeonetworkUser.find_or_create_by_user(current_user)
 
         response.headers['X-Authenticated-lastname'] = current_user.last_name
         response.headers['X-Authenticated-firstname'] = current_user.first_name
@@ -38,7 +36,7 @@ class ApplicationController < ActionController::Base
         response.headers['X-Authenticated-group'] = 'Users'
 	if !session["geonetwork_connected"]
           session["geonetwork_connected"] = true
-	  redirect_to "/geonetwork/srv/en/shib.user.login" and return
+	  redirect_to "/geonetwork/" and return
 	end
       end
     else
@@ -46,10 +44,7 @@ class ApplicationController < ActionController::Base
       # Geonetwork authentication without being authenticated first.
       # Redirect to autologin path
       #
-      # if request_path.starts_with?('/geonetwork/srv/en/shib.user.login')
-      # .login is interpreted as extension.
-      #
-      if request_path.starts_with?('/geonetwork/srv/en/shib.user')
+      if request_path.starts_with?('/geonetwork/srv/eng/shib.user')
 	session["geouser_return_to"] = request_path
         session["geonetwork_connected"] = true
 	# store_location!
@@ -63,11 +58,9 @@ class ApplicationController < ActionController::Base
       cookies.delete('SPRING_SECURITY_REMEMBER_ME_COOKIE', path: '/geoserver')
       cookies.delete('JSESSIONID', path: '/geonetwork')
     end
-    # response.headers['X-Authenticated-User'] = user_signed_in? ? 'xymox' : ''
     response.headers['X-Accel-Redirect'] = "/internal#{[ request_path, request.env['QUERY_STRING'] ].reject { |item| item.blank? }.compact.join('?')}"
 
-    logger.debug response.headers.inspect
-    # logger.debug 'X-Authenticated-User'.downcase.gsub(/\-/, '_')
+    logger.info response.headers.inspect
 
     render :nothing => true
   end
@@ -76,11 +69,6 @@ class ApplicationController < ActionController::Base
   protected
 
   def choose_layout
-    #if devise_controller? && [ :sign_in, :login ].include?(action_name.to_sym)
-    #  "login"
-    #else
-    #  "application"
-    #end
     "application"
   end
 
