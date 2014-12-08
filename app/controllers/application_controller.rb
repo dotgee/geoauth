@@ -12,8 +12,10 @@ class ApplicationController < ActionController::Base
     # Avoid infinite loop
     #
     request_path = ( [ '/', ] + AUTOLOGIN_PATHS ).include?(request.env['REQUEST_PATH']) ? '/geoserver/' :  request.env['REQUEST_PATH']
-#    request_path = request_path || request.original_url 
-    logger.info request_path
+    #request_path = request_path || request.original_url 
+    #logger.info "################ HTTP REFERER: #{request.env['HTTP_REFERER']}"
+    #logger.info "################ SESSION : #{session[:referer]}"
+    #logger.info "################ Request path: #{request_path}"
 
     #
     # stop if already redirect to /internal
@@ -34,10 +36,10 @@ class ApplicationController < ActionController::Base
         response.headers['X-Authenticated-firstname'] = current_user.first_name
         response.headers['X-Authenticated-profile'] = geonetwork_user.nil? ? 'RegisteredUser' : geonetwork_user.profile
         response.headers['X-Authenticated-group'] = 'Users'
-	if !session["geonetwork_connected"]
+        if !session["geonetwork_connected"]
           session["geonetwork_connected"] = true
-	  redirect_to "/geonetwork/" and return
-	end
+          redirect_to "/geonetwork/" and return
+	      end
       end
     else
       #
@@ -45,9 +47,9 @@ class ApplicationController < ActionController::Base
       # Redirect to autologin path
       #
       if request_path.starts_with?('/geonetwork/srv/eng/shib.user')
-	session["geouser_return_to"] = request_path
+        session["geouser_return_to"] = request_path
         session["geonetwork_connected"] = true
-	# store_location!
+	      # store_location!
        	redirect_to AUTOLOGIN_PATHS.first and return
       end
     end
@@ -60,7 +62,7 @@ class ApplicationController < ActionController::Base
     end
     response.headers['X-Accel-Redirect'] = "/internal#{[ request_path, request.env['QUERY_STRING'] ].reject { |item| item.blank? }.compact.join('?')}"
 
-    logger.info response.headers.inspect
+    #logger.info response.headers.inspect
 
     render :nothing => true
   end
@@ -107,8 +109,10 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource_or_scope)
-    geonetwork_path = session.delete("geouser_return_to")
-    geonetwork_path || stored_location_for(resource_or_scope) || signed_in_root_path(resource_or_scope)
+    #geonetwork_path = session.delete("geouser_return_to")
+    #geonetwork_path || stored_location_for(resource_or_scope) || signed_in_root_path(resource_or_scope)
+    #logger.info "Devise redirect : #{session[:referer]}"
+    session[:referer] || root_path
   end
 
   def internal_path?
