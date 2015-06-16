@@ -83,7 +83,7 @@ module Devise
         def self.digest(password, stretches, salt, pepper)
           digester = StandardByteDigester.new(256, stretches, SALT_SIZE)
           digest = digester.digest(password)
-          "digest1:#{Base64.encode64(digest)}"
+          "digest1:#{Base64.strict_encode64(digest)}"
         end
 
         # def self.salt(stretches)
@@ -94,7 +94,7 @@ module Devise
           raise "Unknown password encryptor" unless encrypted_password.match(/^digest1:(.*)/)
           check_password = encrypted_password.gsub(/^digest1:/, '') # $1
           digester = StandardByteDigester.new(256, stretches, SALT_SIZE)
-          digester.matches(password, Base64.decode64(check_password))
+          digester.matches(password, Base64.strict_decode64(check_password))
         end
       end
     end
