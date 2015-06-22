@@ -87,5 +87,11 @@ module Admin
         format.json { head :no_content }
       end
     end
+    
+    private
+
+    def user_params
+      params(:user).permit([ :email, :password, :password_confirmation, :remember_me, :username, :enabled, :first_name, :last_name, :role_ids, :group_ids ])
+    end
   end
 end

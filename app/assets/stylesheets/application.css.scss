@@ -1,17 +1,81 @@
-@import "config/colors";
-@import "config/mixins";
-@import "base/base";
-@import "components/components";
-@import "modules/modules";
+// $body-bg: #f9f9f9;
+// $text-color: #555555;
+$text-color: #55545b;
+// for blue
+// $navbar-default-bg: #1d799e;
+// $navbar-default-color: #fff;
+$navbar-default-bg: #fff;
+$navbar-default-link-color: #404b55;
+$navbar-default-link-hover-color: #044e6a;
+// for blue
+// $navbar-default-link-active-color: #fff;
+// $navbar-default-link-active-bg: #086487;
+$navbar-default-link-active-bg: $navbar-default-bg;
+$navbar-height: 70px;
 
-.xcontent {
-  background-color: #eee;
-  padding: 20px;
-  margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
-  -webkit-border-radius: 0 0 6px 6px;
-  -moz-border-radius: 0 0 6px 6px;
-  border-radius: 0 0 6px 6px;
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-  box-shadow: 0 1px 2px rgba(0,0,0,.15);
+// $input-bg: #f9f9f9;
+// $input-border: #555555;
+
+$input-border-radius: 0;
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome.css";
+
+// @import "bootstrap-datepicker3";
+// @import "bootstrap-datetimepicker";
+
+//
+// for navbar-fixed-top
+//
+// body { padding-top: $navbar-height + 20px }
+// for fluid container
+// body { padding-top: $navbar-height }
+
+body { color: #55545b; }
+
+abbr[title] {
+  color: red;
 }
+
+.center-block.devise {
+  width: 550px;
+}
+
+.wrapper {
+  background-color: #fff;
+  padding: 20px 20px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .25);
+  border: 1px solid #e8e8e8;
+}
+
+footer {
+  border-top: 1px solid #f2f2f2;
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+.sidebar-nav {
+  a {
+    color: #555459;
+    font-size: 18px;
+  }
+}
+
+.navbar-default {
+  border-bottom: 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,.15);
+}
+
+form.form-horizontal {
+  .form-group {
+    @extend .form-group-lg;
+    .form-actions {
+      @extend .col-sm-offset-3;
+      @extend .col-sm-10;
+    }
+  }
+}
+
+@import "base/sidebar-page";
+@import "base/ilist";

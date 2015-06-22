@@ -1,5 +1,6 @@
 class UserRole < ActiveRecord::Base
-  attr_accessible :role_id, :user_id, :username
+  track_who_does_it
+  # attr_accessible :role_id, :user_id, :username
 
   validates :role_id, presence: true
   validates :username, presence: true
@@ -7,8 +8,8 @@ class UserRole < ActiveRecord::Base
 
   before_validation :ensure_username
 
-  belongs_to :user
-  belongs_to :role
+  belongs_to :user, counter_cache: :roles_count
+  belongs_to :role, counter_cache: :users_count
 
   private
     def ensure_username

@@ -42,7 +42,7 @@ module Admin
     # POST /groups
     # POST /groups.json
     def create
-      @group = Group.new(params[:group])
+      @group = Group.new(create_group_params)
   
       respond_to do |format|
         if @group.save
@@ -61,7 +61,7 @@ module Admin
       @group = Group.find(params[:id])
   
       respond_to do |format|
-        if @group.update_attributes(params[:group])
+        if @group.update_attributes(update_group_params)
           format.html { redirect_to admin_groups_url, notice: "Group #{@group.name} was successfully updateed." }
           format.json { head :no_content }
         else
@@ -81,6 +81,16 @@ module Admin
         format.html { redirect_to groups_url }
         format.json { head :no_content }
       end
+    end
+
+    private
+
+    def create_group_params
+      params.require(:group).permit([:name, :description])
+    end
+
+    def update_group_params
+      params.require(:group).permit([:description])
     end
   end
 end

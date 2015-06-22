@@ -1,4 +1,4 @@
-Geoauth::Application.routes.draw do
+Rails.application.routes.draw do
 
   # devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout', :sign_up => 'signup' }
   devise_for :users, :skip => [ :sessions ]
@@ -14,8 +14,8 @@ Geoauth::Application.routes.draw do
   #end
   root :to => "home#root"
 
-  match "/autologin" => "auth#root"
-  match "/debug/check" => "home#check"
+  match "/autologin" => "auth#root", via: [ :get, :post ]
+  get "/debug/check" => "home#check"
 
   namespace :admin do
     resources :users
@@ -25,12 +25,10 @@ Geoauth::Application.routes.draw do
 
   devise_scope :user do
     authenticated :user do
-      match "/geoserver/j_spring_security_logout" => "devise/sessions#destroy"
+      match "/geoserver/j_spring_security_logout" => "devise/sessions#destroy", via: [ :get, :post ]
       get 'logout', :to => 'devise/sessions#destroy'
     end
   end
 
-  mount_sextant if Rails.env.development?
-
-  match "*path" => "home#root"
+  match "*path" => "home#root", via: [ :get, :post, :put ]
 end

@@ -1,0 +1,70 @@
+.ilist {
+  background-color: transparent;
+  border: 1px solid #e8e8e8;
+  color: #55545b;
+  font-family: 'Emoji Passthrough',Lato,appleLogo,sans-serif;
+  padding: 20px;
+
+  .row.cols {
+    border-bottom: 1px solid #e8e8e8;
+    &:hover .actions a {
+      display: block;
+    }
+  }
+
+  .row {
+    .col1 {
+      @extend .col-sm-6;
+    }
+    .col2 {
+      @extend .col-sm-3;
+    }
+    .col3 {
+      @extend .col-sm-2;
+    }
+    .col4 {
+      @extend .col-sm-1;
+    }
+  }
+  .cols {
+    color: #9e9ea6 !important;
+    font-size: 17px;
+    font-weight: 300;
+    a {
+      color: #9e9ea6;
+    }
+    .actions a {
+      color: #d9534f;
+      display: none;
+    }
+  }
+
+  .col {
+    display: block;
+    float: left;
+    margin: 0 0 5px;
+    padding-right: 2%;
+    &.members {
+      text-align: center;
+    }
+  }
+
+  h4, h5 {
+    font-family: 'Emoji Passthrough',Lato,appleLogo,sans-serif;
+  }
+
+  h5 {
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  h4 {
+    padding-left: 15px;
+    margin-bottom: 0 !important;
+    margin-top: 20px;
+    a {
+      color: #3c4b5b !important;
+    }
+  }
+}

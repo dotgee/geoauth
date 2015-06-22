@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  include SentientController
 
   LOGOUT_PATHS = [ '/geoserver/j_spring_security_logout' ]
   AUTOLOGIN_PATHS = [ '/autologin' ]

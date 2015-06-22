@@ -1,5 +1,5 @@
 class UsersDatatable
-  delegate :params, :h, :link_to, :edit_admin_user_path, :admin_user_path, to: :@view
+  delegate :params, :link_to, :edit_admin_user_path, :admin_user_path, to: :@view
 
   def initialize(view)
     @view = view
@@ -21,7 +21,7 @@ class UsersDatatable
       [
         "##{resource.id}",
         link_to(resource.email, edit_admin_user_path(resource)),
-        h(resource.full_name),
+        resource.full_name,
         [ link_to('Edit', edit_admin_user_path(resource), class: 'm-btn mini blue-stripe'), link_to('Destroy', admin_user_path(resource), method: :delete, data: { confirm: 'Are you sure?' }, class: 'm-btn mini red-stripe') ].join(' ')
       ]
     end

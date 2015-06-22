@@ -1,14 +1,14 @@
 class User < ActiveRecord::Base
+  include SentientUser
+  
+  acts_as_paranoid
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :encryptable, :encryptor => :byte_digester_encryptor
-
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessible :username, :enabled, :first_name, :last_name, :role_ids, :group_ids
 
   #
   # Fake attribute for devise encryptable

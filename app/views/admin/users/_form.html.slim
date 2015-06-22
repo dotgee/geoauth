@@ -1,19 +1,12 @@
-= simple_form_for([ :admin, @user ], defaults: { input_html: { class: 'm-wrap m-ctrl-large' } }) do |f|
+= simple_form_for([ :admin, @user ], html: { class: 'form-horizontal' }, defaults: { input_html: { class: 'xform-horizontal' } }, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input, boolean: :horizontal_boolean }) do |f|
   = f.error_notification
-  .page-header
-    h1 User informations
-  .row
-    fieldset.span6
-      .form-inputs
-        = f.input :email, autofocus: true, required: true
-        = f.input :username, hint: 'Leave blank to use email', input_html: { autocomplete: 'off' }
-        = f.input :password, hint: "leave it blank if you don't want to change it", required: false, input_html: { autocomplete: 'off' }
-        = f.input :password_confirmation
-        = f.input :enabled, as: :boolean
-    fieldset.span6
-      .form-inputs
-        = f.input :first_name
-        = f.input :last_name
+  = f.input :email, autofocus: true, required: true, placeholder: 'Email'
+  = f.input :username, hint: 'Leave blank to use email', input_html: { autocomplete: 'off' }
+  = f.input :password, hint: "leave it blank if you don't want to change it", required: false, input_html: { autocomplete: 'off' }
+  = f.input :password_confirmation
+  = f.input :enabled, as: :boolean
+  = f.input :first_name
+  = f.input :last_name
   - unless @user.new_record?
     .page-header
       h1 Roles

@@ -3,7 +3,7 @@ module Admin
     # GET /roles
     # GET /roles.json
     def index
-      @roles = Role.all
+      @roles = Role.list.all.decorate
   
       respond_to do |format|
         format.html # index.html.erb
@@ -42,7 +42,7 @@ module Admin
     # POST /roles
     # POST /roles.json
     def create
-      @role = Role.new(params[:role])
+      @role = Role.new(create_role_params)
   
       respond_to do |format|
         if @role.save
@@ -61,7 +61,7 @@ module Admin
       @role = Role.find(params[:id])
   
       respond_to do |format|
-        if @role.update_attributes(params[:role])
+        if @role.update_attributes(update_role_params)
           format.html { redirect_to admin_roles_url, notice: "Role #{@role.name} was successfully updated." }
           format.json { head :no_content }
         else
@@ -81,6 +81,16 @@ module Admin
         format.html { redirect_to admin_roles_url }
         format.json { head :no_content }
       end
+    end
+
+    private
+    
+    def create_role_params
+      params.require(:role).permit(:name, :description)
+    end
+
+    def update_role_params
+      params.require(:role).permit(:description)
     end
   end
 end

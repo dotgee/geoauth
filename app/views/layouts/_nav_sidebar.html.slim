@@ -1,0 +1,10 @@
+= gravatar_image_tag(current_user.email, alt: current_user.email, gravatar: { size: 36 })
+= link_to admin_users_path do
+  => fa_icon(:user)
+  | Users
+= link_to admin_groups_path do
+  => fa_icon(:users)
+  | Groups
+= link_to admin_roles_path do
+  => fa_icon(:"user-times")
+  | Roles

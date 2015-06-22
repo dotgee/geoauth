@@ -1,5 +1,8 @@
 class Group < ActiveRecord::Base
-  attr_accessible :description, :name
+  track_who_does_it
+#  attr_accessible :description, :name
+
+  acts_as_paranoid
   
   validates :name, presence: true, uniqueness: true
 
