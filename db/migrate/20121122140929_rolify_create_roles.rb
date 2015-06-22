@@ -11,6 +11,7 @@ class RolifyCreateRoles < ActiveRecord::Migration
       t.references :user
       t.references :role
       t.string :username, :null => false
+      t.timestamps
     end
 
     add_index(:roles, :name)
