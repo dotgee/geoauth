@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   include SentientUser
   
-  acts_as_paranoid
+  # acts_as_paranoid
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,

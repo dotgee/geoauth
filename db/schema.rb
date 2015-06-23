@@ -19,20 +19,20 @@ ActiveRecord::Schema.define(version: 20150617145904) do
   create_table "group_roles", force: :cascade do |t|
     t.integer  "group_id"
     t.integer  "role_id"
-    t.string   "groupname",  limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "groupname"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "group_roles", ["group_id", "role_id"], name: "index_group_roles_on_group_id_and_role_id", unique: true, using: :btree
   add_index "group_roles", ["groupname", "role_id"], name: "index_group_roles_on_groupname_and_role_id", unique: true, using: :btree
 
   create_table "groups", force: :cascade do |t|
-    t.string   "name",          limit: 255,                null: false
-    t.string   "description",   limit: 255
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.boolean  "enabled",                   default: true
+    t.string   "name",                         null: false
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "enabled",       default: true
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
     t.datetime "deleted_at"
@@ -42,26 +42,26 @@ ActiveRecord::Schema.define(version: 20150617145904) do
 
   create_table "role_props", force: :cascade do |t|
     t.integer  "role_id"
-    t.string   "rolename",   limit: 255, null: false
-    t.string   "propname",   limit: 255, null: false
-    t.string   "propvalue",  limit: 255, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "rolename",   null: false
+    t.string   "propname",   null: false
+    t.string   "propvalue",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "role_props", ["role_id"], name: "index_role_props_on_role_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
-    t.string   "name",          limit: 255
+    t.string   "name"
     t.integer  "resource_id"
-    t.string   "resource_type", limit: 255
-    t.string   "description",   limit: 255
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.string   "parent",        limit: 255
+    t.string   "resource_type"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "parent"
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
-    t.integer  "users_count",               default: 0
+    t.integer  "users_count",   default: 0
     t.datetime "deleted_at"
   end
 
@@ -70,53 +70,55 @@ ActiveRecord::Schema.define(version: 20150617145904) do
 
   create_table "user_props", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "username",   limit: 255
-    t.string   "propname",   limit: 255, null: false
-    t.string   "propvalue",  limit: 255, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "username"
+    t.string   "propname",   null: false
+    t.string   "propvalue",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "user_props", ["user_id"], name: "index_user_props_on_user_id", using: :btree
 
   create_table "user_roles", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "role_id"
-    t.string  "username",      limit: 255, null: false
-    t.integer "created_by_id"
-    t.integer "updated_by_id"
+    t.integer  "user_id"
+    t.integer  "role_id"
+    t.string   "username",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "created_by_id"
+    t.integer  "updated_by_id"
   end
 
   add_index "user_roles", ["user_id", "role_id"], name: "index_user_roles_on_user_id_and_role_id", using: :btree
   add_index "user_roles", ["username", "role_id"], name: "index_user_roles_on_username_and_role_id", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "first_name",             limit: 255
-    t.string   "last_name",              limit: 255
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
-    t.string   "username",               limit: 255,                null: false
-    t.string   "confirmation_token",     limit: 255
+    t.string   "first_name"
+    t.string   "last_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "username",                              null: false
+    t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email",      limit: 255
-    t.string   "email",                  limit: 255, default: "",   null: false
-    t.string   "encrypted_password",     limit: 255, default: "",   null: false
-    t.string   "reset_password_token",   limit: 255
+    t.string   "unconfirmed_email"
+    t.string   "email",                  default: "",   null: false
+    t.string   "encrypted_password",     default: "",   null: false
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                      default: 0
+    t.integer  "sign_in_count",          default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
-    t.string   "authentication_token",   limit: 255
-    t.boolean  "enabled",                            default: true
-    t.string   "remember_token",         limit: 255
-    t.string   "invitation_token",       limit: 255
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "authentication_token"
+    t.boolean  "enabled",                default: true
+    t.string   "remember_token"
+    t.string   "invitation_token"
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
-    t.integer  "roles_count",                        default: 0
+    t.integer  "roles_count",            default: 0
     t.datetime "deleted_at"
   end
 
