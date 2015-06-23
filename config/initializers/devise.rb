@@ -253,3 +253,14 @@ Warden::Strategies.add(:spring_security_login) do
     end
   end
 end
+
+#
+# customize layout
+#
+Rails.application.config.to_prepare do
+  Devise::SessionsController.layout "geoauth_login"
+  Devise::RegistrationsController.layout proc { |controller| user_signed_in? ? "application" : "devise" }
+  Devise::ConfirmationsController.layout "devise"
+  Devise::UnlocksController.layout "devise"
+  Devise::PasswordsController.layout "devise"
+end

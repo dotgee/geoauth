@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   include SentientController
 
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
   LOGOUT_PATHS = [ '/geoserver/j_spring_security_logout' ]
   AUTOLOGIN_PATHS = [ '/autologin' ]
 
@@ -133,5 +135,14 @@ class ApplicationController < ActionController::Base
 
   def request_path
     request.env['REQUEST_PATH']
+  end
+
+  #
+  # for strong parameters with devise
+  #
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) << :username
   end
 end
