@@ -41,7 +41,7 @@ module Admin
     # POST /admin/users
     # POST /admin/users.json
     def create
-      @user = User.new(params[:user])
+      @user = User.new(user_params)
   
       respond_to do |format|
         if @user.save

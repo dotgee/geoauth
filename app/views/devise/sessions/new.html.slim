@@ -3,12 +3,11 @@
   h1.text-center.login-title
   .account-wall
     = devise_error_messages!
-    img.profile-img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120" alt=""
     = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-vertical form-signin' }) do |f|
         = f.input :email, autofocus: true, label: false, required: true, placeholder: 'Email'
         = f.input :password, label: false, required: true, placeholder: 'Password'
+        = link_to "Forgot your password?", new_password_path(resource_name)
+        = f.button :submit, "Sign in", class: 'btn btn-lg btn-login btn-block'
         - if devise_mapping.rememberable?
           = f.input :remember_me, :as => :boolean, :inline_label => 'Remember me', :label => false, :hint => false if devise_mapping.rememberable?
-        = f.button :submit, "Sign in", class: 'btn btn-lg btn-primary btn-block'
   .login-footer
-    = render "devise/shared/links"
