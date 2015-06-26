@@ -1,7 +1,7 @@
 app_dir = File.expand_path("../../", __FILE__)
 rails_env = ENV['RAILS_ENV'] || 'production'
 
-app_dir = "/var/www/app/rails/#{rails_env}/#{app_name}"
+app_name = "geoauth"
 
 worker_processes rails_env == 'production' ? 16 : 4
 
