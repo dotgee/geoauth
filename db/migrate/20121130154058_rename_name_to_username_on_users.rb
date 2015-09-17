@@ -4,7 +4,7 @@ end
 class RenameNameToUsernameOnUsers < ActiveRecord::Migration
   def change
     if User.column_names.include?('name')
-      User.all.each do |user|
+      User.unscoped.all.each do |user|
         user.name = user.email
         user.save!
       end
