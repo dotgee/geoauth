@@ -95,3 +95,4 @@ _yardoc
 doc/
 
 Gemfile.lock
+config/unicorn.rb

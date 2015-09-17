@@ -1,0 +1,155 @@
+#login-wrapper {
+  display: table;
+  width: 100%;
+}
+
+.form-signin {
+  vertical-align: middle;
+  // max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+  .form-signin-heading, .form-signin .checkbox {
+    margin-bottom: 10px;
+  }
+  .checkbox {
+    font-weight: normal;
+  }
+  .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .form-control:focus {
+    z-index: 2;
+  }
+  input[type="text"] {
+    margin-bottom: -1px;
+    // border-bottom-left-radius: 0;
+    // border-bottom-right-radius: 0;
+  }
+  input[type="password"] {
+    margin-bottom: 10px;
+    // border-top-left-radius: 0;
+    // border-top-right-radius: 0;
+  }
+}
+.account-wall {
+  margin-top: 20px;
+  padding: 40px 0px 20px 0px;
+  // background-color: #f7f7f7;
+  // -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  // -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  // box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+.login-title {
+  color: #555;
+  font-size: 18px;
+  font-weight: 400;
+  display: block;
+}
+.profile-img {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 10px;
+  display: block;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.need-help {
+  margin-top: 10px;
+}
+.new-account {
+  display: block;
+  margin-top: 10px;
+}
+
+body.login {
+  background-color: #3686be; // #0d77b6;
+  color: #fff;
+  height: 100%;
+  width: 100%;
+
+  a {
+    color: #fff;
+  }
+
+  .btn-login {
+    background-color: #215f8b;
+    border-color: #215f8b;
+    color: #fff;
+    &:hover {
+      background-color: #19486a;
+      border-color: #19486a;
+    }
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 60px;
+    border: none;
+    background-color: #2B74A7;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 300;
+  }
+}
+
+.parent {
+  // min-height: 100%;
+}
+
+.valign {
+  display: flex;
+  justify-content: center;
+}
+
+.halign {
+  display: flex;
+  justify-content: center;
+}
+
+.nav > li.signup {
+  margin-left: 20px;
+  padding: 20px 0px;
+  & > a {
+    padding: 10px 15px
+  }
+}
+
+.navbar-brand {
+  // logo is 30px height
+  padding: 20px 15px;
+}
+
+.nav > li {
+  padding: 30px 15px;
+  & > a {
+    padding: 0px 0px;
+    text-transform: uppercase;
+    &:hover {
+      // text-decoration: underline;
+      border-bottom: 1px #fff dotted;
+      background-color: #3686be;
+    }
+    &.btn-transparent:hover {
+      background-color: #fff;
+      color: #3686be;
+    }
+  }
+}
+
+.btn-transparent {
+  background-color: transparent;
+  border-color: #fff;
+  &:hover {
+    background-color: #fff;
+    color: #3686be;
+  }
+}

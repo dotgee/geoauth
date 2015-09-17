@@ -1,27 +1,28 @@
-rails_env = "development"
+app_dir = File.expand_path("../../", __FILE__)
+rails_env = ENV['RAILS_ENV'] || 'production'
+
 app_name = "geoauth"
-basedir = "/var/www/app/rails/#{rails_env}/#{app_name}"
 
 worker_processes rails_env == 'production' ? 16 : 4
 
 # Help ensure your application will always spawn in the symlinked
 # "current" directory that Capistrano sets up.
-working_directory "#{basedir}"
+working_directory "#{app_dir}"
 
 
 # listen on both a Unix domain socket and a TCP port,
 # we use a shorter backlog for quicker failover when busy
-listen "#{basedir}/tmp/sockets/unicorn.#{app_name}.sock", :backlog => 64
+listen "#{app_dir}/tmp/sockets/unicorn.sock", :backlog => 64
 # listen 54018, :tcp_nopush => true
 
 # nuke workers after 30 seconds instead of 60 seconds (the default)
 timeout 10
 
 # feel free to point this anywhere accessible on the filesystem
-pid "#{basedir}/tmp/pids/unicorn.pid"
+pid "#{app_dir}/tmp/pids/unicorn.pid"
 
-stderr_path "#{basedir}/log/#{app_name}.stderr.log"
-stdout_path "#{basedir}/log/#{app_name}.stdout.log"
+stderr_path "#{app_dir}/log/#{app_name}.stderr.log"
+stdout_path "#{app_dir}/log/#{app_name}.stdout.log"
 
 preload_app true
 GC.respond_to?(:copy_on_write_friendly=) and

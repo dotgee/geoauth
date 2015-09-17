@@ -41,7 +41,7 @@ module Admin
     # POST /admin/users
     # POST /admin/users.json
     def create
-      @user = User.new(params[:user])
+      @user = User.new(user_params)
   
       respond_to do |format|
         if @user.save
@@ -60,9 +60,9 @@ module Admin
       @user = User.find(params[:id])
   
       if params[:user] && !params[:user][:password].blank?
-        result = @user.update_attributes(params[:user])
+        result = @user.update_attributes(user_params)
       else
-        result = @user.update_without_password(params[:user])
+        result = @user.update_without_password(user_params)
       end
 
       respond_to do |format|
@@ -91,7 +91,7 @@ module Admin
     private
 
     def user_params
-      params(:user).permit([ :email, :password, :password_confirmation, :remember_me, :username, :enabled, :first_name, :last_name, :role_ids, :group_ids ])
+      params.require(:user).permit(:email, :password, :password_confirmation, :remember_me, :username, :enabled, :first_name, :last_name, { role_ids: [] },  { group_ids: [] } )
     end
   end
 end

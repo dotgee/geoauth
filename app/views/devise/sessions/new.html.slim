@@ -1,13 +1,13 @@
-= devise_error_messages!
-.devise-form
-  h2.logo
-    img(src='https://assetcache.harvestapp.com/uploads/logos/0011/7228/logo_dotgee-screen.jpg?1352812093')
-  .form-container
-    = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-vertical form-login' },  defaults: { input_html: { class: 'm-wrap input-block-level' } }) do |f|
-      = f.input :email, :autofocus => true
-      = f.input :password
-      - if devise_mapping.rememberable?
-        = f.input :remember_me, :as => :boolean, :inline_label => 'Remember me', :label => false, :hint => false if devise_mapping.rememberable?
-      = f.button :submit, "Sign in", :class => 'btn-primary'
-.login-footer
-  = render "devise/shared/links"
+- # from https://gist.github.com/bMinaise/7329874
+#login-wrapper
+  h1.text-center.login-title
+  .account-wall
+    = devise_error_messages!
+    = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-vertical form-signin' }) do |f|
+        = f.input :email, autofocus: true, label: false, required: true, placeholder: 'Email'
+        = f.input :password, label: false, required: true, placeholder: 'Password'
+        = link_to "Forgot your password?", new_password_path(resource_name)
+        = f.button :submit, "Sign in", class: 'btn btn-lg btn-login btn-block'
+        - if devise_mapping.rememberable?
+          = f.input :remember_me, :as => :boolean, :inline_label => 'Remember me', :label => false, :hint => false if devise_mapping.rememberable?
+  .login-footer

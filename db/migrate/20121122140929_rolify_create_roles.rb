@@ -11,11 +11,17 @@ class RolifyCreateRoles < ActiveRecord::Migration
       t.references :user
       t.references :role
       t.string :username, :null => false
+      t.timestamps
     end
 
     add_index(:roles, :name)
     add_index(:roles, [ :name, :resource_type, :resource_id ])
     add_index(:user_roles, [ :user_id, :role_id ])
     add_index(:user_roles, [ :username, :role_id ], unique: true)
+
+    #
+    # init Admin role
+    #
+    Role.create! name: 'ROLE_ADMINISTRATOR'
   end
 end

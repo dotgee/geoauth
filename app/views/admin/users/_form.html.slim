@@ -1,20 +1,21 @@
 = simple_form_for([ :admin, @user ], html: { class: 'form-horizontal' }, defaults: { input_html: { class: 'xform-horizontal' } }, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input, boolean: :horizontal_boolean }) do |f|
-  = f.error_notification
-  = f.input :email, autofocus: true, required: true, placeholder: 'Email'
-  = f.input :username, hint: 'Leave blank to use email', input_html: { autocomplete: 'off' }
-  = f.input :password, hint: "leave it blank if you don't want to change it", required: false, input_html: { autocomplete: 'off' }
-  = f.input :password_confirmation
-  = f.input :enabled, as: :boolean
-  = f.input :first_name
-  = f.input :last_name
-  - unless @user.new_record?
-    .page-header
-      h1 Roles
-    = f.association :roles, label: '', as: :check_boxes, input_html: { class: "" }
+  .col-md-7
+    = f.error_notification
+    = f.input :email, autofocus: true, required: true, placeholder: 'Email'
+    = f.input :username, hint: 'Leave blank to use email', input_html: { autocomplete: 'off' }
+    = f.input :password, hint: "leave it blank if you don't want to change it", required: false, input_html: { autocomplete: 'off' }
+    = f.input :password_confirmation
+    = f.input :enabled, as: :boolean
+    = f.input :first_name
+    = f.input :last_name
+    - unless @user.new_record?
+      .page-header
+        h1 Roles
+      = f.association :roles, label: '', as: :check_boxes, input_html: { class: "" }
 
-    .page-header
-      h1 Groups
+      .page-header
+        h1 Groups
     
-    = f.association :groups, label: '', as: :check_boxes, input_html: { class: "" }
+      = f.association :groups, label: '', as: :check_boxes, input_html: { class: "" }
 
-  = f.button :wrapped, cancel: admin_users_path
+    = f.button :wrapped, cancel: admin_users_path

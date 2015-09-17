@@ -49,6 +49,19 @@ abbr[title] {
   border: 1px solid #e8e8e8;
 }
 
+.fixed-bottom, .fixed-top {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}
+
+.fixed-bottom {
+  bottom: 0;
+  margin-bottom: 0;
+  border-width: 1px 0 0;
+}
+
 footer {
   border-top: 1px solid #f2f2f2;
   margin-top: 10px;
@@ -79,3 +92,4 @@ form.form-horizontal {
 
 @import "base/sidebar-page";
 @import "base/ilist";
+@import "base/form-signin";

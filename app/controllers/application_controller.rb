@@ -1,13 +1,24 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   include SentientController
+  include Devise::Controllers::StoreLocation
 
-  LOGOUT_PATHS = [ '/geoserver/j_spring_security_logout' ]
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
+  LOGOUT_PATHS = [ '/geoserver/j_spring_security_logout', '/geonetwork/j_spring_security_logout' ]
   AUTOLOGIN_PATHS = [ '/autologin' ]
 
   layout :choose_layout
 
   def root
+
+    #
+    # handle logout
+    #
+    if user_signed_in? && LOGOUT_PATHS.include?( request.env['REQUEST_PATH'] )
+      store_location_for(current_user, request.env['REQUEST_PATH'])
+      redirect_to '/logout' and return
+    end
 
     #
     # Avoid infinite loop
@@ -31,16 +42,16 @@ class ApplicationController < ActionController::Base
     if user_signed_in?
       response.headers['X-Authenticated-User'] = current_user.email
       if request_path.starts_with?('/geonetwork')
-        geonetwork_user = GeonetworkUser.find_or_create_by_user(current_user)
+        geonetwork_user = Geonetwork::User.find_or_create_by_user(current_user)
 
         response.headers['X-Authenticated-lastname'] = current_user.last_name
         response.headers['X-Authenticated-firstname'] = current_user.first_name
-        response.headers['X-Authenticated-profile'] = geonetwork_user.nil? ? 'RegisteredUser' : geonetwork_user.profile
-        response.headers['X-Authenticated-group'] = 'Users'
-        if !session["geonetwork_connected"]
-          session["geonetwork_connected"] = true
-          redirect_to "/geonetwork/" and return
-	      end
+        # response.headers['X-Authenticated-profile'] = geonetwork_user.nil? ? 'RegisteredUser' : geonetwork_user.profile
+        # response.headers['X-Authenticated-group'] = 'Users'
+        # if !session["geonetwork_connected"]
+        #   session["geonetwork_connected"] = true
+        #   redirect_to "/geonetwork/" and return
+	      # end
       end
     else
       #
@@ -63,7 +74,7 @@ class ApplicationController < ActionController::Base
     end
     response.headers['X-Accel-Redirect'] = "/internal#{[ request_path, request.env['QUERY_STRING'] ].reject { |item| item.blank? }.compact.join('?')}"
 
-    #logger.info response.headers.inspect
+    logger.info response.headers.inspect
 
     render :nothing => true
   end
@@ -87,6 +98,7 @@ class ApplicationController < ActionController::Base
       session.delete("geonetwork_connected")
       cookies.delete('JSESSIONID', path: '/geoserver')
       cookies.delete('SPRING_SECURITY_REMEMBER_ME_COOKIE', path: '/geoserver')
+      cookies.delete('SPRING_SECURITY_REMEMBER_ME_COOKIE', path: '/geonetwork')
       cookies.delete('JSESSIONID', path: '/geonetwork')
     end
   end
@@ -98,15 +110,17 @@ class ApplicationController < ActionController::Base
   # Overwriting the sign_out redirect path method
   #
   def after_sign_out_path_for(resource_or_scope)
-    if [ '/geoserver/j_spring_security_logout' ].include?(request.env['REQUEST_PATH'])
-      return request.env['REQUEST_PATH']
-    end
+    # if LOGOUT_PATHS.include?(request.env['REQUEST_PATH'])
+    #   return request.env['REQUEST_PATH']
+    # end
     #
     # It's not the best place to handle full sso logout, but this method
     # should be called after every logout
     #
+    return_path = stored_location_for(resource_or_scope) || root_path
     sso_logout
-    root_path
+
+    return_path
   end
 
   def after_sign_in_path_for(resource_or_scope)
@@ -133,5 +147,14 @@ class ApplicationController < ActionController::Base
 
   def request_path
     request.env['REQUEST_PATH']
+  end
+
+  #
+  # for strong parameters with devise
+  #
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) << :username
   end
 end

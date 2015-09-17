@@ -80,11 +80,13 @@ ActiveRecord::Schema.define(version: 20150617145904) do
   add_index "user_props", ["user_id"], name: "index_user_props_on_user_id", using: :btree
 
   create_table "user_roles", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "role_id"
-    t.string  "username",      null: false
-    t.integer "created_by_id"
-    t.integer "updated_by_id"
+    t.integer  "user_id"
+    t.integer  "role_id"
+    t.string   "username",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "created_by_id"
+    t.integer  "updated_by_id"
   end
 
   add_index "user_roles", ["user_id", "role_id"], name: "index_user_roles_on_user_id_and_role_id", using: :btree

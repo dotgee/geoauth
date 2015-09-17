@@ -1,5 +1,5 @@
 class GroupRole < ActiveRecord::Base
-  attr_accessible :role_id, :group_id, :groupname
+  # attr_accessible :role_id, :group_id, :groupname
 
   validates :role_id, presence: true
   validates :groupname, presence: true
