@@ -68,3 +68,21 @@
     }
   }
 }
+
+//
+// bascule temporaire en table plutot qu'en div
+//
+
+table.table {
+  tr {
+    &:hover .actions a {
+      display: block;
+    }
+    td {
+      &.actions a {
+        color: #d9534f;
+        display: none;
+      }
+    }
+  }
+}
