@@ -75,3 +75,5 @@ gem 'reform'
 gem 'draper'
 
 gem 'gravatar_image_tag'
+
+gem 'ransack'

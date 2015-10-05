@@ -3,7 +3,7 @@ module Admin
     # GET /admin/users
     # GET /admin/users.json
     def index
-      # @users = User.all
+      @users = PaginatingDecorator.decorate(User.page(params[:page]).per(50))
   
       respond_to do |format|
         format.html # index.html.erb
@@ -67,7 +67,7 @@ module Admin
 
       respond_to do |format|
         if result
-          format.html { redirect_to admin_users_path, notice: "User #{@user.full_name} was successfully updated." }
+          format.html { redirect_to admin_users_path, notice: "User #{@user.name} was successfully updated." }
           format.json { head :no_content }
         else
           format.html { render action: "edit" }

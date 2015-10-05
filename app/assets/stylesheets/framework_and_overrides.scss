@@ -115,3 +115,17 @@ h3.logo {
 @import "base/sidebar-page";
 @import "base/ilist";
 @import "base/form-signin";
+
+.mynav {
+  border: 0;
+  border-bottom: 1px solid #47a3d9;
+  height: 72px;
+  left: 230px;
+  box-shadow: none;
+}
+
+ul.nav > li {
+  padding: 20px 15px;
+}
+body {
+}

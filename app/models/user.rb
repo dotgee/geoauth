@@ -19,7 +19,9 @@ class User < ActiveRecord::Base
 
   before_save :map_email_to_username
 
-  def full_name
+  scope :list, -> { order(:email) }
+
+  def name
     [ first_name, last_name ].compact.join(' ')
   end
 

@@ -79,9 +79,12 @@ table.table {
       display: block;
     }
     td {
-      &.actions a {
-        color: #d9534f;
-        display: none;
+      &.actions {
+        min-width: 30px;
+        a {
+          color: #d9534f;
+          display: none;
+        }
       }
     }
   }

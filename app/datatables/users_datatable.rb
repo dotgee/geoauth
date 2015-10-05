@@ -21,7 +21,7 @@ class UsersDatatable
       [
         "##{resource.id}",
         link_to(resource.email, edit_admin_user_path(resource)),
-        resource.full_name,
+        resource.name,
         [ link_to('Edit', edit_admin_user_path(resource), class: 'm-btn mini blue-stripe'), link_to('Destroy', admin_user_path(resource), method: :delete, data: { confirm: 'Are you sure?' }, class: 'm-btn mini red-stripe') ].join(' ')
       ]
     end

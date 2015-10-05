@@ -1,12 +1,26 @@
-table#users.table.table-striped data-source="#{admin_users_url(format: 'json')}" cellpadding=0 cellspacing=0 border=0
+table.users.table
   thead
-    tr
+    tr.hide_on_mobile
+      th Email
+      th Name
+      th Created at
       th
-        | #
-      th
-        | Email
-      th
-        | Name
-      th 
-        | &nbsp;
-  tbody
+    
+    tbody
+      - @users.each do |user|
+        tr
+          td
+            = link_to user.email, edit_admin_user_path(user)
+            br/
+            p
+              em
+                = user.roles.map(&:name).join(', ')
+          td.name
+            = user.name
+          td
+            = user.created_date
+          td.actions
+            = link_to [ :admin, user ], method: :delete, data: { confirm: 'Are you sure?' }, title: "Delete user #{user.name}" do
+              = fa_icon(:"times-circle-o")
+
+= paginate @users
