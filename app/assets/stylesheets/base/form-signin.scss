@@ -1,6 +1,18 @@
 #login-wrapper {
   display: table;
   width: 100%;
+  background-color: #fff;
+  padding: 40px 30px;
+  border-radius: 3px;
+
+  .login-footer {
+    color: #555;
+    text-align: center;
+    a {
+      color: #555;
+      text-decoration: underline;
+    }
+  }
 }
 
 .form-signin {
@@ -14,7 +26,7 @@
   .checkbox {
     font-weight: normal;
   }
-  .form-control {
+  .xform-control {
     position: relative;
     font-size: 16px;
     height: auto;
@@ -39,7 +51,7 @@
 }
 .account-wall {
   margin-top: 20px;
-  padding: 40px 0px 20px 0px;
+  padding: 10px 0px 10px 0px;
   // background-color: #f7f7f7;
   // -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   // -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
@@ -47,8 +59,8 @@
 }
 .login-title {
   color: #555;
-  font-size: 18px;
-  font-weight: 400;
+  font-size: 4rem;
+  // font-weight: 400;
   display: block;
 }
 .profile-img {
@@ -78,9 +90,17 @@ body.login {
     color: #fff;
   }
 
+  h3.logo {
+    font-size: 2.5em;
+    text-align: center;
+    background: none;
+  }
+
   .btn-login {
-    background-color: #215f8b;
-    border-color: #215f8b;
+    // background-color: #215f8b;
+    // border-color: #215f8b;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
     color: #fff;
     &:hover {
       background-color: #19486a;

@@ -2,7 +2,9 @@ nav.navbar role="navigation"
   .container
     .navbar-header
       a.navbar-brand href='/'
-        = image_tag('geoauth.png')
+        .logo
+          => fa_icon(:globe)
+          | Geoauth
     .navbar-collapse.collapse.navbar-responsive-collapse
       ul.nav.navbar-nav.navbar-right
         li

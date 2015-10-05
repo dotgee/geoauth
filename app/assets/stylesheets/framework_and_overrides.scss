@@ -16,7 +16,16 @@ $navbar-height: 70px;
 // $input-bg: #f9f9f9;
 // $input-border: #555555;
 
-$input-border-radius: 0;
+$input-border-radius: 3px !default;
+
+$input-border-radius-base: 3px !default;
+$input-border-radius-large: 3px !default;
+$input-border-radius-small: 3px !default;
+
+$btn-border-radius-base:  3px !default;
+$btn-border-radius-large: 3px !default;
+$btn-border-radius-small: 3px !default;
+
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
@@ -88,6 +97,19 @@ form.form-horizontal {
       @extend .col-sm-10;
     }
   }
+}
+
+.logo {
+  color: #afdefa;
+  font-family: 'Lato', Calibri, Arial, sans-serif;
+  font-size: 1.4em;
+  margin: 0;
+  font-weight: 300;
+}
+
+h3.logo {
+  padding: 20px;
+  background: #0d77b6;
 }
 
 @import "base/sidebar-page";

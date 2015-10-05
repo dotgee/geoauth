@@ -1,13 +1,18 @@
 - # from https://gist.github.com/bMinaise/7329874
+h3.logo
+  => fa_icon(:globe)
+  | Geoauth 
+
 #login-wrapper
   h1.text-center.login-title
+    'Log in
   .account-wall
     = devise_error_messages!
     = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-vertical form-signin' }) do |f|
-        = f.input :email, autofocus: true, label: false, required: true, placeholder: 'Email'
-        = f.input :password, label: false, required: true, placeholder: 'Password'
-        = link_to "Forgot your password?", new_password_path(resource_name)
+        = f.input :email, autofocus: true, label: false, required: true, placeholder: 'Email', input_html: { class: 'input-lg' }
+        = f.input :password, label: false, required: true, placeholder: 'Password', input_html: { class: 'input-lg' }
         = f.button :submit, "Sign in", class: 'btn btn-lg btn-login btn-block'
-        - if devise_mapping.rememberable?
+        - if devise_mapping.rememberable? && false
           = f.input :remember_me, :as => :boolean, :inline_label => 'Remember me', :label => false, :hint => false if devise_mapping.rememberable?
   .login-footer
+    = link_to "Forgot your password?", new_password_path(resource_name)

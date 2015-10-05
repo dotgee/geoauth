@@ -3,34 +3,6 @@
     => fa_icon(:"user-times")
     | Roles
 
-.roles.ilist.col-sm-11
-  .hide_on_mobile
-    .row
-      .col.col1
-        h5
-          | Name
-      .col.col2
-        h5 Created BY
-      .col.col3.members
-        h5 Members
-      .col.col4
-    
-  - @roles.each do |role|
-    .row.cols
-      h4 = link_to role.name, edit_admin_role_path(role)
-      .col.col1
-        p
-          em
-            = role.description 
-      .col.col2
-        = role.link_to_creator
-      .col.col3.members
-        => fa_icon(:user)
-        = role.user_roles.count
-      .col.col4.actions
-        = link_to [ :admin, role ], method: :delete, data: { confirm: 'Are you sure?' }, title: "Delete role #{role.name}" do
-          = fa_icon(:"times-circle-o")
-
-.col-lg-4
+= render partial: 'list'
 .col-lg-12
   = btn_link_to 'New Role', new_admin_role_path
