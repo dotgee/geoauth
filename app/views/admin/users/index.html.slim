@@ -1,18 +1,10 @@
-.page-header
-  h1 Listing Users
+page-header
+  h1
+    => fa_icon(:user)
+    | Users
 
-table#users.table.table-striped data-source="#{admin_users_url(format: 'json')}" cellpadding=0 cellspacing=0 border=0
-  thead
-    tr
-      th
-        | #
-      th
-        | Email
-      th
-        | Name
-      th 
-        | &nbsp;
-  tbody
+= render partial: 'list'
+
 br
 
-= link_to 'New User', new_admin_user_path, class: 'btn btn-primary'
+= btn_link_to 'New User', new_admin_user_path

@@ -3,7 +3,7 @@ module Admin
     # GET /groups
     # GET /groups.json
     def index
-      @groups = Group.all
+      @groups = Group.list.all.decorate
   
       respond_to do |format|
         format.html # index.html.erb

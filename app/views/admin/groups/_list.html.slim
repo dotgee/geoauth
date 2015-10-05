@@ -1,23 +1,26 @@
-table.table.table-striped
+table.groups.table.table-striped
   thead
-    tr
-      th #
+    tr.hide_on_mobile
       th Name
-      th Description
+      th Created BY
+      th Members
       th
+    
+    tbody
+      - @groups.each do |group|
+        tr
+          td
+            = link_to group.name, edit_admin_group_path(group)
+            br/
+            p
+              em
+                = group.description 
+          td
+            = group.link_to_creator
+          td.members
+            => fa_icon(:user)
+            = group.users_count
+          td.actions
+            = link_to [ :admin, group ], method: :delete, data: { confirm: 'Are you sure?' }, title: "Delete group #{group.name}" do
+              = fa_icon(:"times-circle-o")
 
-  tbody
-    - @groups.each do |group|
-      tr
-        td= "##{group.id}"
-        td
-          = link_to group.name, admin_group_path(group)
-          |  
-          = "(#{group.members.count})"
-        td= group.description
-        td
-          = link_to 'Edit', edit_admin_group_path(group), class: 'm-btn mini blue-stripe'
-          |  
-          = link_to 'Destroy', admin_group_path(group), method: :delete, data: { confirm: 'Are you sure?' }, class: 'm-btn mini red-stripe'
-
-br
