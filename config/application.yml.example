@@ -1,0 +1,17 @@
+defaults: &defaults
+  admin_role: ROLE_ADMINISTRATOR
+  geonetwork_url: /geonetwork
+  geoserver_url: /geonetwork
+  geocms_url: http://geomap.dotgeeapp.com/
+
+development:
+  <<: *defaults
+
+production:
+  <<: *defaults
+
+staging:
+  <<: *defaults
+
+test:
+  <<: *defaults

@@ -164,6 +164,10 @@ class ApplicationController < ActionController::Base
     request.env['REQUEST_PATH']
   end
 
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => exception.message
+  end
+
   #
   # for strong parameters with devise
   #

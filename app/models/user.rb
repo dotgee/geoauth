@@ -103,7 +103,7 @@ class User < ActiveRecord::Base
       rolify_options.merge!(options.reject{ |k,v| ![:before_add, :after_add, :before_remove, :after_remove].include? k.to_sym }) if Rolify.orm == "active_record"
 
       # has_and_belongs_to_many :roles, rolify_options
-      has_many :user_roles
+      has_many :user_roles, dependent: :destroy
       has_many :roles, rolify_options.merge!( { through: :user_roles } )
 
       self.adapter = Rolify::Adapter::Base.create("role_adapter", options[:role_cname], self.name)
@@ -121,4 +121,11 @@ class User < ActiveRecord::Base
   end
 
   rolify_hack
+
+  def admin?
+    admin_role = Settings.admin_role
+    admin_role ||= "ROLE_ADMIN"
+
+    has_role? admin_role
+  end
 end

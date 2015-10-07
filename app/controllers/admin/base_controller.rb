@@ -6,7 +6,7 @@ module Admin
 
     private
       def check_admin_role!
-        if current_user.nil? || !current_user.has_role?(:ROLE_ADMINISTRATOR)
+        if current_user.nil? || !current_user.admin?
           redirect_to :root
         end
         true
