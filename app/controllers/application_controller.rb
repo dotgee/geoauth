@@ -117,17 +117,32 @@ class ApplicationController < ActionController::Base
     # It's not the best place to handle full sso logout, but this method
     # should be called after every logout
     #
-    return_path = stored_location_for(resource_or_scope) || root_path
+    return_path = stored_location_for(resource_or_scope) || request.referer || root_path
+
+    # put it in sessionscontroller
     sso_logout
 
     return_path
   end
 
   def after_sign_in_path_for(resource_or_scope)
-    #geonetwork_path = session.delete("geouser_return_to")
-    #geonetwork_path || stored_location_for(resource_or_scope) || signed_in_root_path(resource_or_scope)
-    #logger.info "Devise redirect : #{session[:referer]}"
-    session[:referer] || root_path
+    # specific to geoauth
+    # session[:referer] || root_path
+
+    #
+    # @see https://github.com/plataformatec/devise/wiki/How-To:-redirect-to-a-specific-page-on-successful-sign-in
+    #
+    return request.env['omniauth.origin'] if request.env['omniauth.origin']
+
+    #
+    # not from omniauth
+    #
+    sign_in_url = new_user_session_url
+    if request.referer == sign_in_url
+      super
+    else
+      stored_location_for(resource_or_scope) || request.referer || root_path
+    end
   end
 
   def internal_path?
@@ -157,4 +172,16 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << :username
   end
+
+  def ensure_signup_complete
+    # Ensure we don't go into an infinite loop
+    return if action_name == 'finish_signup'
+
+    # Redirect to the 'finish_signup' page if the user
+    # email hasn't been verified yet
+    if current_user && !current_user.email_verified?
+      redirect_to finish_signup_path(current_user)
+    end
+  end
+
 end
