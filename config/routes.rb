@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   as :user do
     get '/login' => 'devise/geoauth_sessions#new', :as => :new_user_session
     post '/login' => 'devise/sessions#create', :as => :user_session
-    match '/logout' => 'devise/sessions#destroy', :as => :destroy_user_session,
+    match '/logout' => 'devise/geoauth_sessions#destroy', :as => :destroy_user_session,
           :via => Devise.mappings[:user].sign_out_via
   end
 

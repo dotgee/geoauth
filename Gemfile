@@ -43,7 +43,8 @@ gem "email_spec", ">= 1.2.1", :group => :test
 gem "factory_girl_rails", ">= 4.1.0", :group => [:development, :test]
 gem "bootstrap-sass"
 gem 'bootstrap-sass-extras'
-gem 'font-awesome-rails'
+#gem 'font-awesome-rails'
+gem 'font-awesome-sass', '~> 4.4.0'
 gem "devise", ">= 2.1.2"
 gem "devise_invitable", ">= 1.1.1"
 gem "devise-encryptable"
@@ -89,7 +90,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-linkedin'
 gem 'omniauth-shibboleth'
-gem 'rack-saml', path: '../rack-saml'
+# gem 'rack-saml', path: '../rack-saml'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -29,7 +29,8 @@ $btn-border-radius-small: 3px !default;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
-@import "font-awesome.css";
+@import "font-awesome-sprockets";
+@import "font-awesome";
 
 // @import "bootstrap-datepicker3";
 // @import "bootstrap-datetimepicker";

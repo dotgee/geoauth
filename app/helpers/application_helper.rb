@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def fa_icon(fa)
+    icon(fa)
+  end
+
   def avatar_url(user)
     if false && user.avatar_url.present?
       user.avatar_url
