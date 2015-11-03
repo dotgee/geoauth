@@ -15,15 +15,15 @@ class ApplicationController < ActionController::Base
     #
     # handle logout
     #
-    if user_signed_in? && LOGOUT_PATHS.include?( request.env['REQUEST_PATH'] )
-      store_location_for(current_user, request.env['REQUEST_PATH'])
+    if user_signed_in? && LOGOUT_PATHS.include?( request_path )
+      store_location_for(current_user, request_path)
       redirect_to '/logout' and return
     end
 
     #
     # Avoid infinite loop
     #
-    request_path = ( [ '/', ] + AUTOLOGIN_PATHS ).include?(request.env['REQUEST_PATH']) ? '/geoserver/' :  request.env['REQUEST_PATH']
+    rpath = ( [ '/', ] + AUTOLOGIN_PATHS ).include?(request_path) ? '/geoserver/' :  request_path
     #request_path = request_path || request.original_url 
     #logger.info "################ HTTP REFERER: #{request.env['HTTP_REFERER']}"
     #logger.info "################ SESSION : #{session[:referer]}"
@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
 
     if user_signed_in?
       response.headers['X-Authenticated-User'] = current_user.email
-      if request_path.starts_with?('/geonetwork')
+      if rpath.starts_with?('/geonetwork')
         geonetwork_user = Geonetwork::User.find_or_create_by_user(current_user)
 
         response.headers['X-Authenticated-lastname'] = current_user.last_name
@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
       # Geonetwork authentication without being authenticated first.
       # Redirect to autologin path
       #
-      if request_path.starts_with?('/geonetwork/srv/eng/shib.user')
+      if rpath.starts_with?('/geonetwork/srv/eng/shib.user')
         session["geouser_return_to"] = request_path
         session["geonetwork_connected"] = true
 	      # store_location!
@@ -146,7 +146,9 @@ class ApplicationController < ActionController::Base
   end
 
   def request_path
-    request.env['REQUEST_PATH']
+    # return ( request.env['REQUEST_PATH'].nil? == true ) ? request.env['REQUEST_URI'] : request.env['REQUEST_PATH']
+    return request.env['REQUEST_URI']
+    return ( request.env['REQUEST_PATH'].nil? == true ) ? request.env['REQUEST_URI'] : request.env['REQUEST_PATH']
   end
 
   #
