@@ -3,6 +3,7 @@ defaults: &defaults
   geonetwork_url: /geonetwork
   geoserver_url: /geonetwork
   geocms_url: http://geomap.dotgeeapp.com/
+  site_title: Geoauth Instance
 
 development:
   <<: *defaults

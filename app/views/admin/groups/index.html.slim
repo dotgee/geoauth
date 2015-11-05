@@ -1,10 +1,11 @@
-.page-header
-  h1 
-    => fa_icon(:users)
-    | groups
+.col-md-11
+  .page-header
+    h1 
+      => fa_icon(:users)
+      | groups
 
-= render partial: 'list'
+  = render partial: 'list'
 
-br
+  br
 
-= btn_link_to 'New Group', new_admin_group_path
+  = btn_link_to 'New Group', new_admin_group_path

@@ -38,5 +38,19 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  config.action_mailer.default_url_options = { host: 'localhost', port: 23000 }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  # config.action_mailer.default_charset = "utf-8"
+  config.action_mailer.smtp_settings = {
+    :user_name => '43742d259a37bf144',
+    :password => '3ba290b6e59fa1',
+    :address => 'mailtrap.io',
+    :domain => 'mailtrap.io',
+    :port => '2525',
+    :authentication => :cram_md5
+  }
+
 end
 BetterErrors::Middleware.allow_ip! '10.0.2.2'

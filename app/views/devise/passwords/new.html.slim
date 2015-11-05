@@ -1,13 +1,10 @@
-= devise_error_messages!
-.devise-form.password-recovery
-  h2.logo
-    img(src='https://assetcache.harvestapp.com/uploads/logos/0011/7228/logo_dotgee-screen.jpg?1352812093')
-  .form-container
-    = simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }, defaults: { input_html: { class: 'm-wrap input-block-level' } }) do |f|
-      = f.error_notification
-      = f.input :email, autofocus: true, label: 'What email address do you use to sign in?', required: true
-      = f.button :submit, 'Submit', class: 'btn-primary'
-    p
-     = link_to "back to sign in", new_session_path(resource_name)
-.login-footer
-  = render "devise/shared/links"
+.col-sm-6.col-sm-offset-2.col-xs-12
+  = devise_error_messages!
+  .devise-form.password-recovery
+    .form-container
+      = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: 'form-vertical' }, defaults: { input_html: { class: 'xform-horizontal' } }, wrapper: :vertical_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input, boolean: :horizontal_boolean }) do |f|
+        = f.error_notification
+        = f.input :email, autofocus: true, label: 'What email address do you use to sign in?', required: true
+        = f.button :wrapped, cancel: '/login', class: 'btn-lg'
+      p
+       = link_to "back to sign in", new_session_path(resource_name)

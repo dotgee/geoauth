@@ -1,8 +1,12 @@
 = simple_form_for([:admin, @group], defaults: { input_html: { class: 'm-wrap input-block-level' } }) do |f|
   = f.error_notification
-
   .form-inputs
     = f.input :name
     = f.input :description, as: :text, input_html: { rows: 5 }
+
+  - unless @group.new_record?
+    .page-header
+      h1 Roles
+    = f.association :roles, label: '', as: :check_boxes, input_html: { class: "" }
 
   = f.button :wrapped, :cancel => admin_groups_path

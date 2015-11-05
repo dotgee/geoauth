@@ -1,15 +1,3 @@
-$footer-height: 60px;
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  // Margin bottom by footer height + space before footer
-  margin-bottom: 40px + $footer-height;
-}
-
 #login-wrapper {
   display: table;
   width: 100%;
@@ -23,6 +11,12 @@ body {
     a {
       color: #555;
       text-decoration: underline;
+      &.btn-social {
+        color: #fff;
+        &.btn-shibboleth {
+          color: #555;
+        }
+      }
     }
   }
 }
@@ -98,6 +92,44 @@ body.login {
   height: 100%;
   width: 100%;
 
+  .nav > li {
+    & > a {
+      padding: 0px 0px;
+      text-transform: uppercase;
+      &:hover {
+        // text-decoration: underline;
+        border-bottom: 1px #fff dotted;
+        background-color: #3686be;
+      }
+      &.btn-transparent:hover {
+        background-color: #fff;
+        color: #3686be;
+      }
+    }
+  }
+  // padding different juste pour garder l'effet border-bottom dotted sur les liens
+  //
+  .nav > li.btn {
+    margin-left: 20px;
+    padding: 5px 0px;
+    & > a {
+      padding: 10px 15px
+    }
+  }
+
+  .btn-transparent {
+    border-color: #fff;
+    &:hover {
+      background-color: #fff;
+      color: #3686be;
+      border-color: #fff;
+    }
+  }
+
+  .logo {
+    color: #afdefa;
+  }
+
   a {
     color: #fff;
   }
@@ -121,15 +153,9 @@ body.login {
   }
 
   .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: $footer-height;
     border: none;
     background-color: #2B74A7;
     color: #fff;
-    font-size: 20px;
-    font-weight: 300;
   }
 }
 
@@ -153,38 +179,3 @@ body.login {
   padding: 10px 15px;
 }
 
-.nav > li {
-  padding: 15px 15px;
-  & > a {
-    padding: 0px 0px;
-    text-transform: uppercase;
-    &:hover {
-      // text-decoration: underline;
-      border-bottom: 1px #fff dotted;
-      background-color: #3686be;
-    }
-    &.btn-transparent:hover {
-      background-color: #fff;
-      color: #3686be;
-    }
-  }
-}
-// padding different juste pour garder l'effet border-bottom dotted sur les liens
-//
-.nav > li.btn {
-  margin-left: 20px;
-  padding: 5px 0px;
-  & > a {
-    padding: 10px 15px
-  }
-}
-
-
-.btn-transparent {
-  background-color: transparent;
-  border-color: #fff;
-  &:hover {
-    background-color: #fff;
-    color: #3686be;
-  }
-}

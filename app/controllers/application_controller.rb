@@ -121,7 +121,10 @@ class ApplicationController < ActionController::Base
     # It's not the best place to handle full sso logout, but this method
     # should be called after every logout
     #
-    return_path = stored_location_for(resource_or_scope) || request.referer || root_path
+    return_path = stored_location_for(resource_or_scope)
+    return_path ||= request.referer
+    return_path ||= root_path
+	# root_path
 
     logger.info "after_sign_out_path_for #{request.path}"
     # put it in sessionscontroller
@@ -146,7 +149,7 @@ class ApplicationController < ActionController::Base
     if request.referer == sign_in_url
       super
     else
-      stored_location_for(resource_or_scope) || request.referer || root_path
+      stored_location_for(resource_or_scope) || request.referer || '/' # root_path
     end
   end
 

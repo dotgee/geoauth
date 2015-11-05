@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     post '/login' => 'devise/sessions#create', :as => :user_session
     match '/logout' => 'devise/geoauth_sessions#destroy', :as => :destroy_user_session,
           :via => Devise.mappings[:user].sign_out_via
+    match '/geonetwork/logout' => 'devise/geoauth_sessions#destroy_cookie', params: { path: 'geonetwork'}, via: :get
   end
 
   #authenticated :user do

@@ -90,7 +90,7 @@ module Admin
     end
 
     def update_group_params
-      params.require(:group).permit([:description])
+      params.require(:group).permit([:description, { role_ids: [] }])
     end
   end
 end

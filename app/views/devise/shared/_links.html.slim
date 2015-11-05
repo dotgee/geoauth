@@ -1,4 +1,4 @@
-ul.links
+ul.list-unstyled.links
   - if controller_name != 'sessions'
     li.first
       = link_to "Sign in", new_session_path(resource_name)
@@ -17,9 +17,7 @@ ul.links
       = link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name)
   - if devise_mapping.omniauthable?
     - resource_class.omniauth_providers.each do |provider|
-      li
-        = link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider)
-
-  li.last
-   'Powered by 
-   = link_to "dotgee", "http://wwww.dotgee.fr"
+      li class="#{provider.to_s}"
+        = link_to omniauth_authorize_path(resource_name, provider), class: "btn btn-block btn-social btn-#{provider}" do
+            span.fa class="fa-#{provider}"
+            = "Sign in with #{provider.to_s.titleize}"
