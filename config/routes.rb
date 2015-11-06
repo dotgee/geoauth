@@ -5,6 +5,9 @@ Rails.application.routes.draw do
 
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], as: :finish_signup
 
+  get '/:service/sso_logout', to: "sso#logout"
+  get '/:service/delete_cookie', to: "sso#delete_cookie"
+
   as :user do
     get '/login' => 'devise/geoauth_sessions#new', :as => :new_user_session
     post '/login' => 'devise/sessions#create', :as => :user_session

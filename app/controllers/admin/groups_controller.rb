@@ -37,6 +37,7 @@ module Admin
     # GET /groups/1/edit
     def edit
       @group = Group.find(params[:id])
+      @users = PaginatingDecorator.decorate(@group.members.page(params[:page]).per(50))
     end
   
     # POST /groups
