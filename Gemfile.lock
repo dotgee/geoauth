@@ -442,6 +442,3 @@ DEPENDENCIES
   unicorn (>= 4.3.1)
   web-console (~> 2.0)
   wicked
-
-BUNDLED WITH
-   1.10.6
