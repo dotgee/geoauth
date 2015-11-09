@@ -8,6 +8,9 @@ class Role < ActiveRecord::Base
   has_many :user_roles
   has_many :users, through: :user_roles
 
+  has_many :group_roles, dependent: :destroy
+  has_many :groups, through: :group_roles
+
   has_many :properties, class_name: 'RoleProperty'
 
   belongs_to :resource, polymorphic: true

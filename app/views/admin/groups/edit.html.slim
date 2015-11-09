@@ -1,5 +1,15 @@
-.span10.offset1
-  .page-header
-    h1 Editing group
+.row
+  .col-md-7.col-md-offset-1
+    .page-header
+      h1 Edit group
 
-  = render 'form'
+    = render 'form'
+
+.row.divider
+  .col-md-7.col-md-offset-1
+    .page-header
+      h1 
+        | Members 
+        small
+          = "(#{@group.name})"
+    = render 'admin/users/list', users: @users

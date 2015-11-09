@@ -26,10 +26,12 @@ $btn-border-radius-base:  3px !default;
 $btn-border-radius-large: 3px !default;
 $btn-border-radius-small: 3px !default;
 
+$footer-height: 60px;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
-@import "font-awesome.css";
+@import "font-awesome-sprockets";
+@import "font-awesome";
 
 // @import "bootstrap-datepicker3";
 // @import "bootstrap-datetimepicker";
@@ -41,7 +43,18 @@ $btn-border-radius-small: 3px !default;
 // for fluid container
 // body { padding-top: $navbar-height }
 
-body { color: #55545b; }
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body { 
+  color: #55545b;
+  height: 100%;
+  width: 100%;
+  // Margin bottom by footer height + space before footer
+  margin-bottom: 40px + $footer-height;
+}
 
 abbr[title] {
   color: red;
@@ -72,9 +85,19 @@ abbr[title] {
 }
 
 footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: $footer-height;
   border-top: 1px solid #f2f2f2;
   margin-top: 10px;
   padding-top: 10px;
+
+  background-color: $text-color;
+  color: #fff;
+
+  font-size: 20px;
+  font-weight: 300;
 }
 
 .sidebar-nav {
@@ -99,12 +122,61 @@ form.form-horizontal {
   }
 }
 
+a {
+  color: $text-color;
+  &:hover {
+    color: #3686be;
+  }
+}
+
 .logo {
-  color: #afdefa;
+  color: $text-color;
   font-family: 'Lato', Calibri, Arial, sans-serif;
   font-size: 1.4em;
   margin: 0;
   font-weight: 300;
+}
+
+
+.nav.navbar-dotted {
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: 0.15rem;
+  & > li {
+    padding: 18px 15px;
+    & > a {
+      padding: 0px 0px;
+      text-transform: uppercase;
+      &:hover, &:focus {
+        text-decoration: none;
+        background-color: transparent;;
+      }
+      &.btn-transparent:hover {
+        background-color: #fff;
+        color: #3686be;
+      }
+    }
+    //
+    // padding different juste pour garder l'effet border-bottom dotted sur les liens
+    //
+    &.btn {
+      margin-left: 20px;
+      padding: 5px 0px;
+      & > a {
+        padding: 10px 15px
+      }
+    }
+  }
+}
+
+.btn-transparent {
+  background-color: transparent;
+  border-color: $text-color;
+  &:hover {
+    background-color: #fff;
+    color: #3686be;
+    border-color: #3686be;
+  }
 }
 
 h3.logo {
@@ -116,16 +188,23 @@ h3.logo {
 @import "base/ilist";
 @import "base/form-signin";
 
-.mynav {
-  border: 0;
-  border-bottom: 1px solid #47a3d9;
-  height: 72px;
-  left: 230px;
-  box-shadow: none;
+
+//
+// Override bootstrap label
+//
+.form-group-lg {
+  margin-bottom: 25px;
+  .control-label {
+    font-size: $font-size-large;
+    line-height: $line-height-large;
+  }
 }
 
-ul.nav > li {
-  padding: 20px 15px;
-}
-body {
-}
+//
+// for admin but incompatible with frontend
+//
+//ul.nav > li {
+//  padding: 20px 15px;
+//}
+
+@import "modules/bootstrap-social";

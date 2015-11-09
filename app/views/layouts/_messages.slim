@@ -1,0 +1,8 @@
+- flash.each do |key, value|
+  - if value.is_a?(String)
+    div class="alert alert-#{key == :notice ? 'success' : 'warning'}" role="alert"
+      button.close type="close" data-dismiss="alert" aria-label="Close"
+        span
+          | &times;
+      div id="flash_#{key}"
+        = value

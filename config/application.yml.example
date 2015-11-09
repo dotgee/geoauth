@@ -1,0 +1,19 @@
+defaults: &defaults
+  admin_role: ROLE_ADMINISTRATOR
+  geonetwork_url: /geonetwork
+  geoserver_url: /geonetwork
+  geocms_url: http://geomap.dotgeeapp.com/
+  site_title: Geoauth Instance
+  administrator_emails: bob@example.com
+
+development:
+  <<: *defaults
+
+production:
+  <<: *defaults
+
+staging:
+  <<: *defaults
+
+test:
+  <<: *defaults

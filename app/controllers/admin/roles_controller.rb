@@ -37,6 +37,7 @@ module Admin
     # GET /roles/1/edit
     def edit
       @role = Role.find(params[:id])
+      @users = PaginatingDecorator.decorate(@role.users.page(params[:page]).per(50))
     end
   
     # POST /roles

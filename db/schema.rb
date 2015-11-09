@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150617145904) do
+ActiveRecord::Schema.define(version: 20151006153658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,21 @@ ActiveRecord::Schema.define(version: 20150617145904) do
   end
 
   add_index "groups", ["name"], name: "index_groups_on_name", unique: true, using: :btree
+
+  create_table "identities", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "provider",      null: false
+    t.string   "extern_uid",    null: false
+    t.string   "oauth_token"
+    t.string   "oauth_secret"
+    t.datetime "oauth_expires"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "identities", ["extern_uid"], name: "index_identities_on_extern_uid", using: :btree
+  add_index "identities", ["provider"], name: "index_identities_on_provider", using: :btree
+  add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
 
   create_table "role_props", force: :cascade do |t|
     t.integer  "role_id"
@@ -135,4 +150,5 @@ ActiveRecord::Schema.define(version: 20150617145904) do
 
   add_index "users_groups", ["user_id", "group_id"], name: "index_users_groups_on_user_id_and_group_id", using: :btree
 
+  add_foreign_key "identities", "users"
 end

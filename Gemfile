@@ -43,7 +43,8 @@ gem "email_spec", ">= 1.2.1", :group => :test
 gem "factory_girl_rails", ">= 4.1.0", :group => [:development, :test]
 gem "bootstrap-sass"
 gem 'bootstrap-sass-extras'
-gem 'font-awesome-rails'
+#gem 'font-awesome-rails'
+gem 'font-awesome-sass', '~> 4.4.0'
 gem "devise", ">= 2.1.2"
 gem "devise_invitable", ">= 1.1.1"
 gem "devise-encryptable"
@@ -58,6 +59,8 @@ gem 'god'
 
 # gem 'sexp'
 gem 'rolify'
+gem 'cancancan'
+
 gem 'wicked'
 
 # gem 'libv8'
@@ -77,3 +80,29 @@ gem 'draper'
 gem 'gravatar_image_tag'
 
 gem 'ransack'
+
+#
+# omniauth integration
+#
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
+gem 'omniauth-github'
+gem 'omniauth-linkedin'
+gem 'omniauth-shibboleth'
+# gem 'rack-saml', path: '../rack-saml'
+
+group :development, :test do
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug'
+
+  # Access an IRB console on exception pages or by using <%= console %> in views
+  gem 'web-console', '~> 2.0'
+
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring'
+
+
+end
+
+gem 'settingslogic'

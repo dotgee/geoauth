@@ -1,6 +1,15 @@
-.span10.offset1
-  .page-header
-    h1 Editing role
+.row
+  .col-md-7.col-md-offset-1
+    .page-header
+      h1 Edit role
 
-  = render 'form'
+    = render 'form'
 
+.row
+  .col-md-7.col-md-offset-1
+    .page-header
+      h1 
+        | Members 
+        small
+          = "(#{@role.name})"
+    = render 'admin/users/list', users: @users

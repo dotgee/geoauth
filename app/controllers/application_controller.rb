@@ -17,6 +17,7 @@ class ApplicationController < ActionController::Base
     #
     if user_signed_in? && LOGOUT_PATHS.include?( request_path )
       store_location_for(current_user, request_path)
+      logger.info "redirect to logout : #{request_path}"
       redirect_to '/logout' and return
     end
 
@@ -59,20 +60,21 @@ class ApplicationController < ActionController::Base
       # Redirect to autologin path
       #
       if rpath.starts_with?('/geonetwork/srv/eng/shib.user')
-        session["geouser_return_to"] = request_path
+        session["geouser_return_to"] = rpath
         session["geonetwork_connected"] = true
 	      # store_location!
        	redirect_to AUTOLOGIN_PATHS.first and return
       end
     end
 
-    if !user_signed_in? && LOGOUT_PATHS.include?(request.env['REQUEST_PATH'])
+    # after_sign_out_path not called...
+    if !user_signed_in? && LOGOUT_PATHS.include?(request_path)
       session.delete("geonetwork_connected")
       cookies.delete('JSESSIONID', path: '/geoserver')
       cookies.delete('SPRING_SECURITY_REMEMBER_ME_COOKIE', path: '/geoserver')
       cookies.delete('JSESSIONID', path: '/geonetwork')
     end
-    response.headers['X-Accel-Redirect'] = "/internal#{[ request_path, request.env['QUERY_STRING'] ].reject { |item| item.blank? }.compact.join('?')}"
+    response.headers['X-Accel-Redirect'] = "/internal#{[ rpath, request.env['QUERY_STRING'] ].reject { |item| item.blank? }.compact.join('?')}"
 
     logger.info response.headers.inspect
 
@@ -94,12 +96,14 @@ class ApplicationController < ActionController::Base
   # Force logout on every apps
   #
   def sso_logout
+    logger.info "sso_logout #{request_path} #{user_signed_in?}"
     if !user_signed_in?
       session.delete("geonetwork_connected")
       cookies.delete('JSESSIONID', path: '/geoserver')
       cookies.delete('SPRING_SECURITY_REMEMBER_ME_COOKIE', path: '/geoserver')
       cookies.delete('SPRING_SECURITY_REMEMBER_ME_COOKIE', path: '/geonetwork')
       cookies.delete('JSESSIONID', path: '/geonetwork')
+      logger.info "blu - Cookies deleted"
     end
   end
 
@@ -117,17 +121,36 @@ class ApplicationController < ActionController::Base
     # It's not the best place to handle full sso logout, but this method
     # should be called after every logout
     #
-    return_path = stored_location_for(resource_or_scope) || root_path
+    return_path = stored_location_for(resource_or_scope)
+    return_path ||= request.referer
+    return_path ||= root_path
+	# root_path
+
+    logger.info "after_sign_out_path_for #{request.path}"
+    # put it in sessionscontroller
     sso_logout
 
     return_path
   end
 
   def after_sign_in_path_for(resource_or_scope)
-    #geonetwork_path = session.delete("geouser_return_to")
-    #geonetwork_path || stored_location_for(resource_or_scope) || signed_in_root_path(resource_or_scope)
-    #logger.info "Devise redirect : #{session[:referer]}"
-    session[:referer] || root_path
+    # specific to geoauth
+    # session[:referer] || root_path
+
+    #
+    # @see https://github.com/plataformatec/devise/wiki/How-To:-redirect-to-a-specific-page-on-successful-sign-in
+    #
+    return request.env['omniauth.origin'] if request.env['omniauth.origin']
+
+    #
+    # not from omniauth
+    #
+    sign_in_url = new_user_session_url
+    if request.referer == sign_in_url
+      super
+    else
+      stored_location_for(resource_or_scope) || request.referer || '/' # root_path
+    end
   end
 
   def internal_path?
@@ -147,8 +170,12 @@ class ApplicationController < ActionController::Base
 
   def request_path
     # return ( request.env['REQUEST_PATH'].nil? == true ) ? request.env['REQUEST_URI'] : request.env['REQUEST_PATH']
-    return request.env['REQUEST_URI']
-    return ( request.env['REQUEST_PATH'].nil? == true ) ? request.env['REQUEST_URI'] : request.env['REQUEST_PATH']
+    return request.env['REQUEST_URI'].gsub(/\?.*/, '')
+    return ( request.env['REQUEST_PATH'].nil? == true ) ? request.env['REQUEST_URI'].gsub(/\?.*/, '') : request.env['REQUEST_PATH']
+  end
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => exception.message
   end
 
   #
@@ -159,4 +186,16 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << :username
   end
+
+  def ensure_signup_complete
+    # Ensure we don't go into an infinite loop
+    return if action_name == 'finish_signup'
+
+    # Redirect to the 'finish_signup' page if the user
+    # email hasn't been verified yet
+    if current_user && !current_user.email_verified?
+      redirect_to finish_signup_path(current_user)
+    end
+  end
+
 end

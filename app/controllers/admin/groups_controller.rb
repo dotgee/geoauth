@@ -37,6 +37,7 @@ module Admin
     # GET /groups/1/edit
     def edit
       @group = Group.find(params[:id])
+      @users = PaginatingDecorator.decorate(@group.members.page(params[:page]).per(50))
     end
   
     # POST /groups
@@ -90,7 +91,7 @@ module Admin
     end
 
     def update_group_params
-      params.require(:group).permit([:description])
+      params.require(:group).permit([:description, { role_ids: [] }])
     end
   end
 end

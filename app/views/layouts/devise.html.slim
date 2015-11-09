@@ -18,22 +18,16 @@ html lang="en"
     = favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png'
     = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
     = javascript_include_tag "application"
-    scss:
-      html {
-        height: 100%;
-      }
-      body {
-        min-height: 100%;
-      }
 
-  body.login
-    .parent.valign
+  body.devise
+    = render partial: 'layouts/devise_nav_bar'
+    .parent.valign.halign
       .container
-        .row.valign
-          .col-sm-8.col-md-4
-            = yield
-    footer.footer.fixed-bottom
+        .row
+          = yield
+
+    footer.footer
       .container
         .col-md-12
           .text-center
-            ' Geoauth OSUR Instance
+            = Settings.site_title

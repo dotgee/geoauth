@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def fa_icon(fa)
+    icon(fa)
+  end
+
   def avatar_url(user)
     if false && user.avatar_url.present?
       user.avatar_url
@@ -21,5 +25,21 @@ module ApplicationHelper
       html_options[:class] ? html_options[:class] += ' btn btn-primary' : html_options[:class] = 'btn btn-primary'
       link_to(name, options, html_options)
     end
+  end
+
+
+  #
+  # for devise
+  #
+  def resource_name
+    :user
+  end
+ 
+  def resource
+    @resource ||= User.new
+  end
+ 
+  def devise_mapping
+    @devise_mapping ||= Devise.mappings[:user]
   end
 end
