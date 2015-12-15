@@ -204,7 +204,7 @@ class ApplicationController < ActionController::Base
   def register_proxy_service
     proxy_service = params.delete(:proxy_service)
     if proxy_service && !user_signed_in?
-      store_location_for(:user, "/#{proxy_service}")
+      store_location_for(:user, "/#{proxy_service}/")
     end
   end
 end
