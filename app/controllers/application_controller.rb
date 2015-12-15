@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include Devise::Controllers::StoreLocation
 
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :register_proxy_service
 
   LOGOUT_PATHS = [ '/geoserver/j_spring_security_logout', '/geonetwork/j_spring_security_logout' ]
   AUTOLOGIN_PATHS = [ '/autologin' ]
@@ -198,4 +199,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def register_proxy_service
+    proxy_service = params.delete(:proxy_service)
+    if proxy_service && !user_signed_in?
+      store_location_for(:user, "/#{proxy_service}")
+    end
+  end
 end

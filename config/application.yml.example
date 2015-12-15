@@ -5,6 +5,7 @@ defaults: &defaults
   geocms_url: http://geomap.dotgeeapp.com/
   site_title: Geoauth Instance
   administrator_emails: bob@example.com
+  configured_services: [ 'geoserver', 'geonetwork' ]
 
 development:
   <<: *defaults
