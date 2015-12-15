@@ -5,7 +5,8 @@ Rails.application.routes.draw do
 
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], as: :finish_signup
 
-  get '/:service/sso_logout', to: "sso#logout"
+  get '/:service/j_spring_security_logout', to: "sso#init_logout"
+  get '/:service/sso_logout', to: "sso#sso_logout"
   get '/:service/delete_cookie', to: "sso#delete_cookie"
 
   as :user do
@@ -36,7 +37,10 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     authenticated :user do
-      match "/geoserver/j_spring_security_logout" => "devise/sessions#destroy", via: [ :get, :post ]
+      get '/:service/j_spring_security_logout', to: "sso#init_logout"
+      get '/:service/sso_logout', to: "sso#sso_logout"
+      get '/:service/delete_cookie', to: "sso#delete_cookie"
+      # match "/geoserver/j_spring_security_logout" => "devise/sessions#destroy", via: [ :get, :post ]
       get 'logout', :to => 'devise/sessions#destroy'
     end
   end

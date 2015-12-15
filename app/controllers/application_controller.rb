@@ -6,7 +6,8 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :register_proxy_service
 
-  LOGOUT_PATHS = [ '/geoserver/j_spring_security_logout', '/geonetwork/j_spring_security_logout' ]
+  LOGOUT_PATHS = [ /\/j_spring_security_logout/ ]
+  LOGOUT_PATHS_RE = Regexp.union(LOGOUT_PATHS)
   AUTOLOGIN_PATHS = [ '/autologin' ]
 
   layout :choose_layout
@@ -16,7 +17,8 @@ class ApplicationController < ActionController::Base
     #
     # handle logout
     #
-    if user_signed_in? && LOGOUT_PATHS.include?( request_path )
+    logger.info "Before check logout #{user_signed_in?} #{request_path} #{LOGOUT_PATHS_RE}"
+    if user_signed_in? && request_path.match(LOGOUT_PATHS_RE) #.include?( request_path )
       store_location_for(current_user, request_path)
       logger.info "redirect to logout : #{request_path}"
       redirect_to '/logout' and return
