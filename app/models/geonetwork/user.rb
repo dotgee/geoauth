@@ -20,6 +20,7 @@ module Geonetwork
         gu.surname = user.first_name
         gu.name = user.last_name
         gu.profile = 4 # 'RegisteredUser' @see https://github.com/geonetwork/core-geonetwork/blob/53127784c90b9753c30427da4146066ea3dace54/domain/src/main/java/org/fao/geonet/domain/Profile.java
+        # @todo externalize
         gu.organisation = 'OSUR'
         gu.default_email = user.email
         gu.nodeid = 'srv'
@@ -27,6 +28,7 @@ module Geonetwork
         # gu.authtype = 'geoauth'
         # gu.security = 'update_hash_required'
       end
+      g.save! unless g.persisted?
     end
 
     private
