@@ -1,5 +1,5 @@
 class AdminMailer < ApplicationMailer
-  default from: 'admin@osuris.fr'
+  default from: ENV['default_mail_sender']
 
   def new_registration(user)
     @user = user

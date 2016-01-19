@@ -106,3 +106,5 @@ group :development, :test do
 end
 
 gem 'settingslogic'
+
+gem 'figaro'

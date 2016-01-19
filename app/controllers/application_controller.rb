@@ -152,7 +152,7 @@ class ApplicationController < ActionController::Base
     if request.referer == sign_in_url
       super
     else
-      stored_location_for(resource_or_scope) || request.referer || '/' # root_path
+      stored_location_for(resource_or_scope) || request.referer || Settings.default_redirect # '/' # root_path
     end
   end
 
