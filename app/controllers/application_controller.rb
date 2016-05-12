@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include Devise::Controllers::StoreLocation
 
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :check_proxy_service
 
   LOGOUT_PATHS = [ /\/j_spring_security_logout/ ]
   LOGOUT_PATHS_RE = Regexp.union(LOGOUT_PATHS)
@@ -151,7 +152,7 @@ class ApplicationController < ActionController::Base
     if request.referer == sign_in_url
       super
     else
-      stored_location_for(resource_or_scope) || request.referer || '/' # root_path
+      stored_location_for(resource_or_scope) || request.referer || Settings.default_redirect_after_login || root_path
     end
   end
 
@@ -200,4 +201,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def check_proxy_service
+    store_location_for(:user, "/#{params[:proxy_service]}/") if params[:proxy_service].present?
+  end
 end
