@@ -1,4 +1,5 @@
 class Settings < Settingslogic
-  source "#{Rails.root}/config/application.yml"
+  # used in conjonction with figaro
+  source "#{Rails.root}/config/settings.yml"
   namespace Rails.env
 end

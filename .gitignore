@@ -99,3 +99,4 @@ Gemfile.lock
 config/unicorn.rb
 config/application.yml
 config/initializers/rack_saml.rb
+/config/settings.yml

@@ -106,3 +106,8 @@ group :development, :test do
 end
 
 gem 'settingslogic'
+
+gem 'figaro'
+gem 'bugsnag'
+gem 'newrelic_rpm'
+

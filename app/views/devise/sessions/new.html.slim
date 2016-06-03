@@ -12,8 +12,8 @@ h3.logo
         = f.input :email, autofocus: true, label: false, required: true, placeholder: 'Email', input_html: { class: 'input-lg' }
         = f.input :password, label: false, required: true, placeholder: 'Password', input_html: { class: 'input-lg' }
         = f.button :submit, "Sign in", class: 'btn btn-lg btn-login btn-block'
-        - if devise_mapping.rememberable? && false
-          = f.input :remember_me, :as => :boolean, :inline_label => 'Remember me', :label => false, :hint => false if devise_mapping.rememberable?
+        - if devise_mapping.rememberable?
+          = f.input :remember_me, as: :boolean, inline_label: 'Remember me', label: false, hint: false if devise_mapping.rememberable?
   .login-footer
     = link_to "Forgot your password?", new_password_path(resource_name)
 
