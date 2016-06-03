@@ -53,6 +53,8 @@ GEM
       sass (>= 3.2.19)
     bootstrap-sass-extras (0.0.6)
       rails (>= 3.1.0)
+    bugsnag (3.0.0)
+      json (~> 1.7, >= 1.7.7)
     builder (3.2.2)
     bullet (5.0.0)
       activesupport (>= 3.0.0)
@@ -203,6 +205,7 @@ GEM
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     nenv (0.2.0)
+    newrelic_rpm (3.14.1.311)
     nokogiri (1.6.7.1)
       mini_portile2 (~> 2.0.0.rc2)
     notiffany (0.0.8)
@@ -402,6 +405,7 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-sass
   bootstrap-sass-extras
+  bugsnag
   bullet
   byebug
   cancancan
@@ -426,6 +430,7 @@ DEPENDENCIES
   jquery-ui-rails
   kaminari
   mailcatcher
+  newrelic_rpm
   omniauth
   omniauth-facebook
   omniauth-github

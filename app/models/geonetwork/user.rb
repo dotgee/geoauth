@@ -28,7 +28,7 @@ module Geonetwork
         # gu.authtype = 'geoauth'
         # gu.security = 'update_hash_required'
       end
-      g.save! unless g.persisted?
+      # g_user.save! unless g_user.persisted?
     end
 
     private
