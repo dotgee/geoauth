@@ -48,6 +48,7 @@ gem 'font-awesome-sass', '~> 4.4.0'
 gem "devise", ">= 2.1.2"
 gem "devise_invitable", ">= 1.1.1"
 gem "devise-encryptable"
+gem 'devise-i18n'
 
 gem "responders"
 
