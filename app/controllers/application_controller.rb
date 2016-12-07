@@ -13,7 +13,6 @@ class ApplicationController < ActionController::Base
   layout :choose_layout
 
   def root
-
     #
     # handle logout
     #
@@ -28,7 +27,7 @@ class ApplicationController < ActionController::Base
     # Avoid infinite loop
     #
     rpath = ( [ '/', ] + AUTOLOGIN_PATHS ).include?(request_path) ? '/geoserver/' :  request_path
-    #request_path = request_path || request.original_url 
+    #request_path = request_path || request.original_url
     #logger.info "################ HTTP REFERER: #{request.env['HTTP_REFERER']}"
     #logger.info "################ SESSION : #{session[:referer]}"
     #logger.info "################ Request path: #{request_path}"
@@ -38,7 +37,7 @@ class ApplicationController < ActionController::Base
     #
 
     not_found and return if internal_path?
- 
+
     if login_request?
       true
     end
@@ -63,8 +62,8 @@ class ApplicationController < ActionController::Base
       # Redirect to autologin path
       #
       if rpath.starts_with?('/geonetwork/srv/eng/shib.user')
-        session["geouser_return_to"] = rpath
-        session["geonetwork_connected"] = true
+        session['geouser_return_to'] = rpath
+        session['geonetwork_connected'] = true
 	      # store_location!
        	redirect_to AUTOLOGIN_PATHS.first and return
       end
@@ -72,23 +71,34 @@ class ApplicationController < ActionController::Base
 
     # after_sign_out_path not called...
     if !user_signed_in? && LOGOUT_PATHS.include?(request_path)
-      session.delete("geonetwork_connected")
+      session.delete('geonetwork_connected')
       cookies.delete('JSESSIONID', path: '/geoserver')
       cookies.delete('SPRING_SECURITY_REMEMBER_ME_COOKIE', path: '/geoserver')
       cookies.delete('JSESSIONID', path: '/geonetwork')
     end
-    response.headers['X-Accel-Redirect'] = "/internal#{[ rpath, request.env['QUERY_STRING'] ].reject { |item| item.blank? }.compact.join('?')}"
+    response.headers['X-Accel-Redirect'] = app_path
 
     logger.info response.headers.inspect
 
-    render :nothing => true
+    render nothing: true
   end
-
 
   protected
 
+  def app_path
+    m = request_path.match(%r{^/([^/]*)})
+    uri_part = m.nil? ? request_path : m[1]
+    logger.debug("URI part for #{request_path} : #{uri_part}")
+
+    #
+    # TODO use settings to declare internal apps
+    #
+    return "@#{uri_part}" if Settings.configured_services.include?(uri_part)
+    uri_part
+  end
+
   def choose_layout
-    "application"
+    'application'
   end
 
   def not_found
@@ -101,7 +111,7 @@ class ApplicationController < ActionController::Base
   def sso_logout
     logger.info "sso_logout #{request_path} #{user_signed_in?}"
     if !user_signed_in?
-      session.delete("geonetwork_connected")
+      session.delete('geonetwork_connected')
       cookies.delete('JSESSIONID', path: '/geoserver')
       cookies.delete('SPRING_SECURITY_REMEMBER_ME_COOKIE', path: '/geoserver')
       cookies.delete('SPRING_SECURITY_REMEMBER_ME_COOKIE', path: '/geonetwork')

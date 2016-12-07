@@ -45,5 +45,5 @@ Rails.application.routes.draw do
     end
   end
 
-  match "*path" => "home#root", via: [ :get, :post, :put ]
+  match "*path" => "home#root", via: [ :get, :post, :put, :delete, :patch ]
 end

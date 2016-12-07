@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.7.1'
 
 group :assets do
   gem 'sass-rails'
@@ -112,3 +112,4 @@ gem 'figaro'
 gem 'bugsnag'
 gem 'newrelic_rpm'
 
+gem 'dotenv-rails'
