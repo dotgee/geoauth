@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   #authenticated :user do
   #  root :to => 'home#index'
   #end
-  root :to => "home#root"
+  root :to => "home#redirect"
 
   match "/autologin" => "auth#root", via: [ :get, :post ]
   get "/debug/check" => "home#check"
