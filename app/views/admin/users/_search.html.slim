@@ -1,0 +1,6 @@
+= form_tag '', method: 'get', role: 'search'
+  .form-group
+    .input-search
+      = icon('search', class: 'input-search-icon')
+      input type='text' class='form-control form-control-lg input-lg' name='q' value="#{params[:q]}" placeholder='Search...'
+      button type='button' class='input-search-clode icon'

@@ -1,9 +1,12 @@
+.text-right
+  = paginate users
 table.users.table
   thead
     tr.hide_on_mobile
-      th Email
-      th Name
-      th Created at
+      th= sort_by 'email', title: 'Email', current_column: @sort_column
+      th= sort_by 'name', title: 'Name', current_column: @sort_column
+      th Groups
+      th= sort_by 'created_at', title: 'Created at', current_column: @sort_column
       th
     
     tbody
@@ -18,9 +21,12 @@ table.users.table
           td.name
             = user.name
           td
+            em
+              = user.groups.map(&:name).join(', ')
+          td
             = user.created_date
           td.actions
             = link_to [ :admin, user ], method: :delete, data: { confirm: 'Are you sure?' }, title: "Delete user #{user.name}" do
               = fa_icon(:"times-circle-o")
-
-= paginate users
+.text-right
+  = paginate users
