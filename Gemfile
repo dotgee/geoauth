@@ -11,10 +11,7 @@ group :assets do
   gem 'jquery-ui-rails'
 end
 
-gem 'jquery-datatables-rails'
-
 gem 'jquery-rails'
-gem "unicorn", ">= 4.3.1"
 gem "pg", ">= 0.14.1"
 gem "slim"
 gem 'slim-rails'
@@ -113,3 +110,17 @@ gem 'bugsnag'
 gem 'newrelic_rpm'
 
 gem 'dotenv-rails'
+gem 'lograge'
+
+#
+# Add datatables
+#
+gem 'jquery-datatables-rails', '~> 3.4.0'
+gem 'pbkdf2-ruby'
+
+gem 'puma'
+
+#
+# sortable and searchable
+#
+gem 'sortable-table'

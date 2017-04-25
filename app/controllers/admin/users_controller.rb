@@ -3,46 +3,48 @@ module Admin
     # GET /admin/users
     # GET /admin/users.json
     def index
-      @users = PaginatingDecorator.decorate(User.page(params[:page]).per(50))
-  
+      @sort_column = sort_column
+
+      @users = PaginatingDecorator.decorate(User.filter(params[:q]).order(@sort_column.order).page(params[:page]).per(20))
+
       respond_to do |format|
         format.html # index.html.erb
         format.json { render json: UsersDatatable.new(view_context) }
       end
     end
-  
+
     # GET /admin/users/1
     # GET /admin/users/1.json
     def show
       @user = User.find(params[:id])
-  
+
       respond_to do |format|
         format.html # show.html.erb
         format.json { render json: @user }
       end
     end
-  
+
     # GET /admin/users/new
     # GET /admin/users/new.json
     def new
       @user = User.new
-  
+
       respond_to do |format|
         format.html # new.html.erb
         format.json { render json: @user }
       end
     end
-  
+
     # GET /admin/users/1/edit
     def edit
       @user = User.find(params[:id])
     end
-  
+
     # POST /admin/users
     # POST /admin/users.json
     def create
       @user = User.new(user_params)
-  
+
       respond_to do |format|
         if @user.save
           format.html { redirect_to admin_users_path, notice: 'User was successfully created.' }
@@ -53,12 +55,12 @@ module Admin
         end
       end
     end
-  
+
     # PUT /admin/users/1
     # PUT /admin/users/1.json
     def update
       @user = User.find(params[:id])
-  
+
       if params[:user] && !params[:user][:password].blank?
         result = @user.update_attributes(user_params)
       else
@@ -75,23 +77,40 @@ module Admin
         end
       end
     end
-  
+
     # DELETE /admin/users/1
     # DELETE /admin/users/1.json
     def destroy
       @user = User.find(params[:id])
       @user.destroy
-  
+
       respond_to do |format|
         format.html { redirect_to admin_users_url }
         format.json { head :no_content }
       end
     end
-    
+
     private
 
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation, :remember_me, :username, :enabled, :first_name, :last_name, { role_ids: [] },  { group_ids: [] } )
+    end
+
+    def sort_column
+      email_sort = SortableTable::SortColumnDefinition.new('email')
+      name_sort = SortableTable::SortColumnCustomDefinition.new('name',
+        asc: 'last_name asc, first_name asc',
+        desc: 'last_name desc, first_name desc'
+      )
+      date_sort = SortableTable::SortColumnCustomDefinition.new('date',
+        asc: 'created_at asc, updated_at asc',
+        desc: 'updated_at desc, created_at desc'
+      )
+      #,
+      #  asc: 'date asc, number asc',
+      #  desc: 'date desc, number desc')
+      sort_table = SortableTable::SortTable.new([email_sort, name_sort, date_sort])
+      sort_table.sort_column(params[:sort], params[:direction])
     end
   end
 end

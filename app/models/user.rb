@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
   include SentientUser
-  
+  include Filterable
+
+  searchable :email, :first_name, :last_name
+
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
 
@@ -41,26 +44,26 @@ class User < ActiveRecord::Base
       self.username = self.email
     end
   end
-    
+
 
   class << self
     def find_for_oauth(auth, signed_in_resource = nil)
-  
+
       # Get the identity and user if they exist
       identity = Identity.find_for_oauth(auth)
 
       # from http://davidlesches.com/blog/clean-oauth-for-rails-an-object-oriented-approach
       policy = "#{auth.provider}_policy".classify.constantize.new(auth)
-  
+
       # If a signed_in_resource is provided it always overrides the existing user
       # to prevent the identity being locked with accidentally created accounts.
       # Note that this may leave zombie accounts (with no associated identity) which
       # can be cleaned up at a later date.
       user = signed_in_resource ? signed_in_resource : identity.user
-  
+
       # Create the user if needed
       if user.nil?
-  
+
         # Get the existing user by email if the provider gives us a verified email.
         # If no verified email was provided we assign a temporary email and ask the
         # user to verify it on the next step via UsersController.finish_signup
@@ -68,7 +71,7 @@ class User < ActiveRecord::Base
         # email = auth.info.email if email_is_verified
         email = policy.email # we don't verify email
         user = User.where(email: email).first unless email.blank?
-  
+
         # Create the user if it's a new registration
         if user.nil?
 
@@ -83,7 +86,7 @@ class User < ActiveRecord::Base
           user.save!
         end
       end
-  
+
       # Associate the identity with the user if needed
       if identity.user != user
         identity.user = user
@@ -95,7 +98,7 @@ class User < ActiveRecord::Base
     def rolify_hack(options = {})
       include Rolify::Role
       extend Rolify::Dynamic if Rolify.dynamic_shortcuts
-    
+
       options.reverse_merge!({:role_cname => 'Role'})
 
       rolify_options = { :class_name => options[:role_cname].camelize }
@@ -108,7 +111,7 @@ class User < ActiveRecord::Base
 
       self.adapter = Rolify::Adapter::Base.create("role_adapter", options[:role_cname], self.name)
       self.role_cname = options[:role_cname]
-    
+
       load_dynamic_methods if Rolify.dynamic_shortcuts
     end
   end
