@@ -16,7 +16,8 @@ module Admin
     def show
       @group = Group.find(params[:id])
       # @members = @group.members.order(:email).page(params[:page]).per(params[:per])
-      @members = PaginatingDecorator.decorate(@group.members.order(:email).page(params[:page]).per(20))
+      @q = @group.members.ransack(params[:q])
+      @members = PaginatingDecorator.decorate(@q.result.order(:email).page(params[:page]).per(20))
 
       respond_to do |format|
         format.html # show.html.erb

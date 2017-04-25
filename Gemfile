@@ -120,7 +120,3 @@ gem 'pbkdf2-ruby'
 
 gem 'puma'
 
-#
-# sortable and searchable
-#
-gem 'sortable-table'

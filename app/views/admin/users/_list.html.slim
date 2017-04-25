@@ -3,10 +3,10 @@
 table.users.table
   thead
     tr.hide_on_mobile
-      th= sort_by 'email', title: 'Email', current_column: @sort_column
-      th= sort_by 'name', title: 'Name', current_column: @sort_column
-      th Groups
-      th= sort_by 'created_at', title: 'Created at', current_column: @sort_column
+      th= sort_link @q, :email, 'Email'
+      th= sort_link @q, :name, %i(last_name first_name)
+      th= sort_link @q, :groups_name, 'Groups'
+      th= sort_link @q, :created_at
       th
     
     tbody

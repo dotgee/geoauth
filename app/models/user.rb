@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   include SentientUser
   include Filterable
 
-  searchable :email, :first_name, :last_name
+  searchable :email, :first_name, :last_name, :groups_name, :roles_name
 
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
