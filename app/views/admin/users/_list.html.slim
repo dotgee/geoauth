@@ -7,7 +7,7 @@ table.users.table
       th= sort_link @q, :name, %i(last_name first_name)
       th= sort_link @q, :groups_name, 'Groups'
       th= sort_link @q, :created_at
-      th
+      th= link_to 'export users', admin_users_path(format: 'csv', params: params)
     
     tbody
       - users.each do |user|

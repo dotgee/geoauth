@@ -4,7 +4,7 @@
   = f.input :email, autofocus: true, required: true, placeholder: 'Email'
   = f.input :username, hint: 'Leave blank to use email', input_html: { autocomplete: 'off' }
   = f.input :password, hint: "leave it blank if you don't want to change it", required: false, input_html: { autocomplete: 'off' }
-  = f.input :password_confirmation
+  = f.input :password_confirmation, input_html: { autocomplete: 'off' }
   = f.input :enabled, as: :boolean
   = f.input :first_name
   = f.input :last_name

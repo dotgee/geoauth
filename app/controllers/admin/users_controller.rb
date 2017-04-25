@@ -3,6 +3,11 @@ module Admin
     # GET /admin/users
     # GET /admin/users.json
     def index
+      #
+      # sanitize ransack parameter
+      #
+      params.delete(:q) if params[:q] && params[:q][User.search_query].blank?
+
       @q = User.filter(params[:q])
 
       #
@@ -17,12 +22,15 @@ module Admin
                  .select(params[:q].nil? ? 'users.*' : 'users.*, groups.name, roles.name')
                  .order(:email)
                  .to_a.uniq
-      @users = PaginatingDecorator.decorate(Kaminari.paginate_array(@users).page(params[:page]).per(20))
+      # @users = PaginatingDecorator.decorate(Kaminari.paginate_array(@users).page(params[:page]).per(20))
       # @users = PaginatingDecorator.decorate(@q.result.includes(:roles, :groups).order(:email).page(params[:page]).per(20))
 
       respond_to do |format|
-        format.html # index.html.erb
+        format.html {
+          @users = PaginatingDecorator.decorate(Kaminari.paginate_array(@users).page(params[:page]).per(20))
+        } # index.html.erb
         format.json { render json: UsersDatatable.new(view_context) }
+        format.csv { send_data UsersCsvGenerator.new(@users).run, filename: "users-#{Date.today}.csv" }
       end
     end
 
