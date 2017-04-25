@@ -3,4 +3,13 @@
     .input-search
       = icon('search', class: 'input-search-icon')
       = f.search_field User.search_query, class: 'form-control form-control-lg input-lg', placeholder: 'Search...'
-      button type='button' class='input-search-clode icon'
+      button type='button' class='input-search-close fa fa-close icon'
+      
+- content_for :javascripts do
+  javascript:
+    $('button.input-search-close').click(function(evt) {
+      var el = $('.input-search input');
+      var form = $('form#user_search');
+      el.val('');
+      form.submit();
+    });

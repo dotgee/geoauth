@@ -22,6 +22,9 @@ module Admin
       respond_to do |format|
         format.html # show.html.erb
         format.json { render json: @role }
+        format.csv {
+          send_data UsersCsvGenerator.new(@members).run, filename: "users-#{@role.name}-#{Date.today}.csv"
+        }
       end
     end
 

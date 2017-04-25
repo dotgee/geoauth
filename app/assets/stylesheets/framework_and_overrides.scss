@@ -228,7 +228,7 @@ h3.logo {
 
 .input-search .input-search-close, .input-search .input-search-icon {
     position: absolute;
-    top: 33%;
+    top: 46%;
     z-index: 1;
     width: 36px;
     -webkit-transform: translateY(-50%);
@@ -237,4 +237,27 @@ h3.logo {
     transform: translateY(-50%);
 }
 
+.input-search .input-search-close {
+    right: 8px;
+}
+
+.input-search-close.icon {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+button.input-search-close {
+    -webkit-appearance: none;
+    padding: 0;
+    cursor: pointer;
+    background: 0 0;
+    border: 0;
+    outline: none;
+}
+
+.download-link {
+  a {
+    margin-right: 5px;
+  }
+}
 @import "modules/bootstrap-social";
