@@ -16,7 +16,8 @@ module Admin
     def show
       @role = Role.find(params[:id])
       # @members = @role.users.order(:email).page(params[:page]).per(params[:per])
-      @members = PaginatingDecorator.decorate(@role.users.order(:email).page(params[:page]).per(20))
+      @q = @role.users.ransack(params[:q])
+      @members = PaginatingDecorator.decorate(@q.result.order(:email).page(params[:page]).per(20))
 
       respond_to do |format|
         format.html # show.html.erb

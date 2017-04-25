@@ -3,9 +3,8 @@ module Admin
     # GET /admin/users
     # GET /admin/users.json
     def index
-      @sort_column = sort_column
-
-      @users = PaginatingDecorator.decorate(User.filter(params[:q]).order(@sort_column.order).page(params[:page]).per(20))
+      @q = User.filter(params[:q])
+      @users = PaginatingDecorator.decorate(@q.result.includes(:roles, :groups).order(:email).page(params[:page]).per(20))
 
       respond_to do |format|
         format.html # index.html.erb
@@ -94,23 +93,6 @@ module Admin
 
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation, :remember_me, :username, :enabled, :first_name, :last_name, { role_ids: [] },  { group_ids: [] } )
-    end
-
-    def sort_column
-      email_sort = SortableTable::SortColumnDefinition.new('email')
-      name_sort = SortableTable::SortColumnCustomDefinition.new('name',
-        asc: 'last_name asc, first_name asc',
-        desc: 'last_name desc, first_name desc'
-      )
-      date_sort = SortableTable::SortColumnCustomDefinition.new('date',
-        asc: 'created_at asc',
-        desc: 'created_at desc'
-      )
-      #,
-      #  asc: 'date asc, number asc',
-      #  desc: 'date desc, number desc')
-      sort_table = SortableTable::SortTable.new([email_sort, name_sort, date_sort])
-      sort_table.sort_column(params[:sort], params[:direction])
     end
   end
 end

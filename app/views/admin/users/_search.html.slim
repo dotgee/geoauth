@@ -1,6 +1,6 @@
-= form_tag '', method: 'get', role: 'search'
+= search_form_for @q, url: admin_users_path do |f|
   .form-group
     .input-search
       = icon('search', class: 'input-search-icon')
-      input type='text' class='form-control form-control-lg input-lg' name='q' value="#{params[:q]}" placeholder='Search...'
+      = f.search_field User.search_query, class: 'form-control form-control-lg input-lg', placeholder: 'Search...'
       button type='button' class='input-search-clode icon'

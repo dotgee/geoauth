@@ -389,9 +389,6 @@ GEM
       railties (>= 3.1)
       slim (~> 3.0)
     slop (3.6.0)
-    sortable-table (0.1.1)
-      actionpack (>= 3.0.0)
-      activesupport (>= 3.0.0)
     spring (2.0.1)
       activesupport (>= 4.2)
     sprockets (3.7.1)
@@ -496,7 +493,6 @@ DEPENDENCIES
   simple_form (>= 3)
   slim
   slim-rails
-  sortable-table
   spring
   therubyracer
   uglifier (>= 1.0.3)

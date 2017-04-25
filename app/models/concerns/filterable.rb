@@ -8,20 +8,29 @@ module Filterable
       self.searchable_attributes = attrs
     end
 
-    def filter(term)
-      if term.blank?
-        where(nil)
+    def filter(query)
+      if query.blank?
+        ransack(nil)
       else
-        where(query, *search_terms(term))
+        q =
+          if query.is_a? Hash
+            query
+          else
+            tq = {}
+            tq[search_query.to_sym] = query # *search_terms(term)
+          end
+        ransack(q)
       end
     end
 
-    def query
-      searchable_attributes.map { |attr| "lower(#{attr}) LIKE ?" }.join(' OR ')
+    def search_query
+      # searchable_attributes.map { |attr| "lower(#{attr}) LIKE ?" }.join(' OR ')
+      "#{searchable_attributes.join('_or_')}_cont"
     end
 
     def search_terms(term)
-      ["%#{term.downcase}%"] * searchable_attributes.count
+      # ["%#{term.downcase}%"] * searchable_attributes.count
+      term
     end
   end
 end
