@@ -5,7 +5,16 @@ Rails.application.routes.draw do
 
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], as: :finish_signup
 
+  #
+  # geoserver logout url (handle get and post)
+  #
   get '/:service/j_spring_security_logout', to: "sso#init_logout"
+  post '/:service/j_spring_security_logout', to: "sso#init_logout"
+  #
+  # geonetwork logout url
+  #
+  get '/:service/signout', to: "sso#init_logout"
+  post '/:service/signout', to: "sso#init_logout"
   get '/:service/sso_logout', to: "sso#sso_logout"
   get '/:service/delete_cookie', to: "sso#delete_cookie"
 

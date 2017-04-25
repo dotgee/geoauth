@@ -3,6 +3,7 @@ table.users.table
     tr.hide_on_mobile
       th Email
       th Name
+      th Groups
       th Created at
       th
     
@@ -17,6 +18,8 @@ table.users.table
                 = user.roles.map(&:name).join(', ')
           td.name
             = user.name
+          td.groups
+            = user.groups.map(&:name).sort.join(', ')
           td
             = user.created_date
           td.actions
