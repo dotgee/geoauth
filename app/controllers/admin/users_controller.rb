@@ -6,7 +6,7 @@ module Admin
       #
       # sanitize ransack parameter
       #
-      params.delete(:q) if params[:q] && params[:q][User.search_query].blank?
+      params[:q].delete(User.search_query) if params[:q] && params[:q][User.search_query].blank?
 
       @q = User.filter(params[:q])
 
