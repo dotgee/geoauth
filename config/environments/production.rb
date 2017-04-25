@@ -76,4 +76,10 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-end
+  config.action_mailer.default_url_options = { :host => 'https://www.osuris.fr' }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  # config.action_mailer.default_charset = "utf-8"
+  config.action_mailer.smtp_settings = { address: 'smtp.univ-rennes1.fr', port: 25, domain: 'osuris.fr', openssl_verify_mode: 'none' }
+ end

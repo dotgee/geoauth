@@ -20,7 +20,7 @@ table.users.table
                 = user.roles.map(&:name).join(', ')
           td.name
             = user.name
-          td
+          td.groups
             em
               = user.groups.map(&:name).join(', ')
           td

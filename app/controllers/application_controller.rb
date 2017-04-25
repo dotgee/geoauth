@@ -1,12 +1,12 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+  # protect_from_forgery
   include SentientController
   include Devise::Controllers::StoreLocation
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :register_proxy_service
 
-  LOGOUT_PATHS = [ /\/j_spring_security_logout/ ]
+  LOGOUT_PATHS = [ /\/j_spring_security_logout/, /\/geonetwork\/signout/ ]
   LOGOUT_PATHS_RE = Regexp.union(LOGOUT_PATHS)
   AUTOLOGIN_PATHS = [ '/autologin' ]
 
@@ -153,6 +153,7 @@ class ApplicationController < ActionController::Base
     #
     # @see https://github.com/plataformatec/devise/wiki/How-To:-redirect-to-a-specific-page-on-successful-sign-in
     #
+    logger.debug "redirect omniauth.origin : #{request.env['omniauth.origin']}" if request.env['omniauth.origin']
     return request.env['omniauth.origin'] if request.env['omniauth.origin']
 
     #
@@ -160,9 +161,12 @@ class ApplicationController < ActionController::Base
     #
     sign_in_url = new_user_session_url
     if request.referer == sign_in_url
+      logger.debug "redirect calling super : #{request.referer} #{stored_location_for(resource_or_scope)}"
       super
     else
-      stored_location_for(resource_or_scope) || request.referer || Settings.default_redirect_after_login || root_path
+      return_to = stored_location_for(resource_or_scope)
+      logger.debug "last step : #{return_to} || #{request.referer} || #{Settings.default_redirect_after_login} || #{root_path}"
+      return return_to || request.referer || Settings.default_redirect_after_login || root_path
     end
   end
 
@@ -214,6 +218,7 @@ class ApplicationController < ActionController::Base
   def register_proxy_service
     proxy_service = params.delete(:proxy_service)
     if proxy_service && !user_signed_in?
+      logger.debug("store_location #{proxy_service}")
       store_location_for(:user, "/#{proxy_service}")
     end
   end
