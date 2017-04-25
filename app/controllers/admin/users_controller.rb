@@ -19,7 +19,7 @@ module Admin
       #
       @users = @q.result(distinct: true)
                  .includes(:roles, :groups)
-                 .select(params[:q].nil? ? 'users.*' : 'users.*, groups.name, roles.name')
+                 .select(params[:q][User.search_query].blank? ? 'users.*' : 'users.*, groups.name, roles.name')
                  .order(:email)
                  .to_a.uniq
       # @users = PaginatingDecorator.decorate(Kaminari.paginate_array(@users).page(params[:page]).per(20))
