@@ -10,7 +10,7 @@ module Filterable
 
     def filter(query)
       if query.blank?
-        ransack(nil)
+        ransack
       else
         q =
           if query.is_a? Hash

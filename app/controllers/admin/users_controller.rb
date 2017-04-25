@@ -4,7 +4,21 @@ module Admin
     # GET /admin/users.json
     def index
       @q = User.filter(params[:q])
-      @users = PaginatingDecorator.decorate(@q.result.includes(:roles, :groups).order(:email).page(params[:page]).per(20))
+
+      #
+      # TODO: refactor this
+      # could test if query or not to avoid to_a and pagination on array
+      # could avoid distinct: true because where using to_a.uniq
+      # SEE: http://stackoverflow.com/questions/6545990/rails-3-kaminari-pagination-for-an-simple-array
+      # to optimize pagination.
+      #
+      @users = @q.result(distinct: true)
+                 .includes(:roles, :groups)
+                 .select(params[:q].nil? ? 'users.*' : 'users.*, groups.name, roles.name')
+                 .order(:email)
+                 .to_a.uniq
+      @users = PaginatingDecorator.decorate(Kaminari.paginate_array(@users).page(params[:page]).per(20))
+      # @users = PaginatingDecorator.decorate(@q.result.includes(:roles, :groups).order(:email).page(params[:page]).per(20))
 
       respond_to do |format|
         format.html # index.html.erb
