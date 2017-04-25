@@ -17,12 +17,12 @@ table.users.table
             br/
             p
               em
-                = user.roles.map(&:name).join(', ')
+                = user.roles.map(&:name).sort.join(', ')
           td.name
             = user.name
           td.groups
             em
-              = user.groups.map(&:name).join(', ')
+              = user.groups.map(&:name).sort.join(', ')
           td
             = user.created_date
           td.actions
