@@ -10,7 +10,7 @@ table.groups.table
       - @groups.each do |group|
         tr
           td
-            = link_to group.name, edit_admin_group_path(group)
+            = link_to group.name, admin_group_path(group)
             br/
             p
               em
@@ -23,4 +23,3 @@ table.groups.table
           td.actions
             = link_to [ :admin, group ], method: :delete, data: { confirm: 'Are you sure?' }, title: "Delete group #{group.name}" do
               = fa_icon(:"times-circle-o")
-

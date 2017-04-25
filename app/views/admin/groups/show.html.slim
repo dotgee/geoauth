@@ -1,15 +1,38 @@
 p#notice= notice
-.page-header
-  h1= "Group :  #{@group.name}"
-b Description :
-p= @group.description
-
+.row
+  .col-md-7
+    .page-header
+      h1= "Group : #{@group.name}"
+    table.table
+      tbody
+        tr
+          th
+            b Name
+          td
+            = @group.name
+        tr
+          th
+            b Description
+          td
+            = @group.description
+        tr
+          th
+            b Members
+          td
+            => fa_icon(:user)
+            = @members.total_count
+    .form-actions
+      = btn_link_to "Edit #{@group.name}", edit_admin_group_path(@group)
+      |  or 
+      = link_to 'back', admin_groups_path
+      
 - if @members.any?
-  .page-header
-    h2 Users list
-  = render partial: 'admin/shared/users_list', locals: { users: @members }
-
-.form-actions
-  = link_to 'Edit', edit_admin_group_path(@group), class: 'm-btn blue'
-  |  or 
-  = link_to 'back', admin_groups_path
+  .divider
+  .row
+    .col-md-12
+      .page-header
+        h1 
+          | Members 
+          small
+            = "(#{@group.name})"
+      = render 'admin/users/list', users: @members

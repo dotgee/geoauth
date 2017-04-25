@@ -103,8 +103,8 @@ module Admin
         desc: 'last_name desc, first_name desc'
       )
       date_sort = SortableTable::SortColumnCustomDefinition.new('date',
-        asc: 'created_at asc, updated_at asc',
-        desc: 'updated_at desc, created_at desc'
+        asc: 'created_at asc',
+        desc: 'created_at desc'
       )
       #,
       #  asc: 'date asc, number asc',

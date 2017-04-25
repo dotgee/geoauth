@@ -5,8 +5,10 @@
 
 = render 'search'
 br/
+= btn_link_to 'New User', new_admin_user_path
+br/
 = render 'list', users: @users
 
-br
+br/
 
 = btn_link_to 'New User', new_admin_user_path
