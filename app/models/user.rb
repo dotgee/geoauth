@@ -1,3 +1,5 @@
+require 'csv'
+
 class User < ActiveRecord::Base
   include SentientUser
   include Filterable
@@ -130,5 +132,23 @@ class User < ActiveRecord::Base
     admin_role ||= "ROLE_ADMIN"
 
     has_role? admin_role
+  end
+
+  #
+  # csv export
+  #
+  def self.to_csv
+    attributes = %w{id email first_name last_name groups roles}
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+
+      all.each do |user|
+        row = attributes.map{ |attr| user.send(attr) if user.attribute_names.include?(attr) }
+        row << user.groups.map(&:name).sort.join(',')
+        row << user.roles.map(&:name).sort.join(',')
+        csv << row.flatten
+      end
+    end
   end
 end
