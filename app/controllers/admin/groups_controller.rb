@@ -20,8 +20,13 @@ module Admin
       @members = PaginatingDecorator.decorate(@q.result.order(:email).page(params[:page]).per(20))
 
       respond_to do |format|
-        format.html # show.html.erb
+        format.html {
+          @members = PaginatingDecorator.decorate(@q.result.order(:email).page(params[:page]).per(20))
+        }# show.html.erb
         format.json { render json: @group }
+        format.csv {
+          send_data UsersCsvGenerator.new(@members).run, filename: "users-#{@group.name}-#{Date.today}.csv"
+        }
       end
     end
 
