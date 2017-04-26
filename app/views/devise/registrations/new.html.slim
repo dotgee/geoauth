@@ -19,7 +19,10 @@
         = f.association :groups, collection:  Group.public_groups, prompt: "Votre usage", label: false, input_html: { multiple: false, name: 'user[group_ids][]' }
         
         p Quel est votre entité d'origine ?
-        = f.association :groups, collection:  Group.entity_groups, prompt: "Autre...", label: false, input_html: { multiple: false, name: 'user[group_ids][]' }
+        = f.association :groups, collection:  Group.entity_groups, prompt: "Autre (indiquez dans commentaires si votre entité n'existe pas)...", label: false, input_html: { multiple: false, name: 'user[group_ids][]' }
+        
+        p Commentaires
+        = f.input :comment, as: :text, label: false, hint: 'Laissez-nous un message pour que nous traitions votre demande au plus vite.'
         
         = f.button :wrapped, cancel: '/login', class: 'btn-lg'
 

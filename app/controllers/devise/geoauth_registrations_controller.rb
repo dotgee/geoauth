@@ -10,7 +10,7 @@ module Devise
     private
 
     def sign_up_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, { group_ids: [] })
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :comments, { group_ids: [] })
     end
 
     def account_update_params
