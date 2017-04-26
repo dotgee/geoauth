@@ -2,6 +2,7 @@ table.groups.table
   thead
     tr.hide_on_mobile
       th Name
+      th Public ?
       th Created BY
       th Members
       th
@@ -15,6 +16,9 @@ table.groups.table
             p
               em
                 = group.description 
+          td
+            - if group.public?
+              = icon('check')
           td
             = group.link_to_creator
           td.members

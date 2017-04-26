@@ -6,11 +6,11 @@ module Devise
         AdminMailer.new_registration(@user).deliver_now
       end
     end
-    
+
     private
 
     def sign_up_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, { group_ids: [] })
     end
 
     def account_update_params

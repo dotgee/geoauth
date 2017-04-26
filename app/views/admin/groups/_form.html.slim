@@ -3,6 +3,8 @@
   .form-inputs
     = f.input :name
     = f.input :description, as: :text, input_html: { rows: 5 }
+    = f.input :public, as: :boolean
+    = f.input :entity, as: :boolean
 
   - unless @group.new_record?
     .page-header

@@ -8,6 +8,8 @@
   = f.input :enabled, as: :boolean
   = f.input :first_name
   = f.input :last_name
+  - if @user.new_record?
+    = f.association :requested_group, Group.public_groups
   - unless @user.new_record?
     .page-header
       h1 Roles
