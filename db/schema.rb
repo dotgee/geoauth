@@ -139,7 +139,6 @@ ActiveRecord::Schema.define(version: 20170426142019) do
     t.integer  "updated_by_id"
     t.integer  "roles_count",            default: 0
     t.datetime "deleted_at"
-    t.integer  "requested_group_id"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
