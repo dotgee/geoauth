@@ -16,7 +16,10 @@
         = f.input :last_name
         
         p Quel sera votre usage de l'IDS ?
-        = f.association :requested_group, collection:  Group.public_groups, prompt: "Votre usage", label: false
+        = f.association :groups, collection:  Group.public_groups, prompt: "Votre usage", label: false, input_html: { multiple: false, name: 'user[group_ids][]' }
+        
+        p Quel est votre entité d'origine ?
+        = f.association :groups, collection:  Group.entity_groups, prompt: "Autre...", label: false, input_html: { multiple: false, name: 'user[group_ids][]' }
         
         = f.button :wrapped, cancel: '/login', class: 'btn-lg'
 

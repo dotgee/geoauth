@@ -22,5 +22,9 @@ class Group < ActiveRecord::Base
     def public_groups
       where(public: true).order(:description).pluck(:description, :id)
     end
+
+    def entity_groups
+      where(entity: true).order(:description).pluck(:description, :id)
+    end
   end
 end
