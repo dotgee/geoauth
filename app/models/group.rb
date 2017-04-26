@@ -3,7 +3,7 @@ class Group < ActiveRecord::Base
 #  attr_accessible :description, :name
 
   acts_as_paranoid
-  
+
   scope :list, -> { order(:name) }
 
   validates :name, presence: true, uniqueness: true
@@ -17,4 +17,10 @@ class Group < ActiveRecord::Base
 
   has_many :group_roles, dependent: :destroy
   has_many :roles, through: :group_roles
+
+  class << self
+    def public_groups
+      where(public: true).order(:description).pluck(:description, :id)
+    end
+  end
 end

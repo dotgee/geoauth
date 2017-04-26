@@ -27,6 +27,11 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :groups, :join_table => :users_groups
 
   #
+  # requested group on signup
+  #
+  belongs_to :requested_group, class_name: Group
+  
+  #
   # oauth
   #
   has_many :identities, dependent: :destroy

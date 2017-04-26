@@ -94,11 +94,11 @@ module Admin
     private
 
     def create_group_params
-      params.require(:group).permit([:name, :description])
+      params.require(:group).permit([:name, :description, :public])
     end
 
     def update_group_params
-      params.require(:group).permit([:description, { role_ids: [] }])
+      params.require(:group).permit([:description, :public, { role_ids: [] }])
     end
   end
 end

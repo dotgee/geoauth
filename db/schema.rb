@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151006153658) do
+ActiveRecord::Schema.define(version: 20170426095908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20151006153658) do
   add_index "group_roles", ["groupname", "role_id"], name: "index_group_roles_on_groupname_and_role_id", unique: true, using: :btree
 
   create_table "groups", force: :cascade do |t|
-    t.string   "name",                         null: false
+    t.string   "name",                          null: false
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -36,9 +36,11 @@ ActiveRecord::Schema.define(version: 20151006153658) do
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
     t.datetime "deleted_at"
+    t.boolean  "public",        default: false
   end
 
   add_index "groups", ["name"], name: "index_groups_on_name", unique: true, using: :btree
+  add_index "groups", ["public"], name: "index_groups_on_public", using: :btree
 
   create_table "identities", force: :cascade do |t|
     t.integer  "user_id"
@@ -135,6 +137,7 @@ ActiveRecord::Schema.define(version: 20151006153658) do
     t.integer  "updated_by_id"
     t.integer  "roles_count",            default: 0
     t.datetime "deleted_at"
+    t.integer  "requested_group_id"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
