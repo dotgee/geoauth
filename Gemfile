@@ -88,6 +88,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-linkedin'
 gem 'omniauth-shibboleth'
+gem 'omniauth-ldap'
 gem 'rack-saml', github: 'dotgee/rack-saml' # path: '../rack-saml-dotgee'
 
 group :development, :test do

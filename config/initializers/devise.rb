@@ -213,6 +213,16 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
   #config.omniauth :facebook, '1510457319266198', 'cfb8eb25809e7699156cae756e6fa6c1', scope: 'public_profile,email', info_fields: 'email,name', display: 'page'
 
+	if ENV.fetch('LDAP_ENABLED', false).to_s == 'true'
+		  config.omniauth :ldap,
+				host: ENV['LDAP_HOST'],
+      	base: ENV['LDAP_BASE'],
+        uid:  ENV['LDAP_UID'],
+        port: ENV['LDAP_PORT'],
+        method: ENV['LDAP_METHOD'].to_sym,
+        bind_dn: ENV['LDAP_BIND_DN'],
+        password: ENV['LDAP_PASSWORD']
+	end
   #config.omniauth :shibboleth, {:uid_field => 'eppn',
   #                 :info_fields => {:email => 'mail', :name => 'cn', :last_name => 'sn'},
   #                 :extra_fields => [:schacHomeOrganization],
