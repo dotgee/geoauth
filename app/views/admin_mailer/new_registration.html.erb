@@ -3,4 +3,12 @@
   L'utilisateur <%= @user.email %> vient d'être créé.
   <br />
   Vous pouvez l'approuver et modifier ses droits <a href="<%= @url %>">ICI</a>.
+
+  <br />
+  <b>Message: </b>
+  <br />
+  <p>
+    <%= h @user.comment %>
+  </p>
+   
 </p>
