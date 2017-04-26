@@ -17,9 +17,8 @@ module Admin
       # SEE: http://stackoverflow.com/questions/6545990/rails-3-kaminari-pagination-for-an-simple-array
       # to optimize pagination.
       #
-      @users = @q.result(distinct: true)
+      @users = @q.result
                  .includes(:roles, :groups)
-                 .select(params[:q] && params[:q][User.search_query].blank? ? 'users.*' : 'users.*, groups.name, roles.name')
                  .order(:email)
                  .to_a.uniq
       # @users = PaginatingDecorator.decorate(Kaminari.paginate_array(@users).page(params[:page]).per(20))

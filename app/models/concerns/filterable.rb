@@ -9,7 +9,7 @@ module Filterable
     end
 
     def filter(query)
-      if query.blank?
+      if false && query.blank?
         ransack
       else
         q =
