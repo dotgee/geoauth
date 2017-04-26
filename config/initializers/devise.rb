@@ -215,11 +215,13 @@ Devise.setup do |config|
 
 	if ENV.fetch('LDAP_ENABLED', false).to_s == 'true'
 		  config.omniauth :ldap,
-				host: ENV['LDAP_HOST'],
+				title: ENV['LDAP_TITLE'],
+				host: ENV.fetch('LDAP_HOST') { 'localhost' },
       	base: ENV['LDAP_BASE'],
         uid:  ENV['LDAP_UID'],
         port: ENV['LDAP_PORT'],
         method: ENV['LDAP_METHOD'].to_sym,
+        filter: ENV['LDAP_FILTER'],
         bind_dn: ENV['LDAP_BIND_DN'],
         password: ENV['LDAP_PASSWORD']
 	end
