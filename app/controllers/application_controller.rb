@@ -152,9 +152,10 @@ class ApplicationController < ActionController::Base
 
     #
     # @see https://github.com/plataformatec/devise/wiki/How-To:-redirect-to-a-specific-page-on-successful-sign-in
+    # ldap comes from /login page, don't redirect on login after successful login...
     #
     logger.debug "redirect omniauth.origin : #{request.env['omniauth.origin']}" if request.env['omniauth.origin']
-    return request.env['omniauth.origin'] if request.env['omniauth.origin']
+    return request.env['omniauth.origin'] if request.env['omniauth.origin'] && request['omniauth.strategy'].try(:name) != 'ldap'
 
     #
     # not from omniauth
@@ -165,6 +166,7 @@ class ApplicationController < ActionController::Base
       super
     else
       return_to = stored_location_for(resource_or_scope)
+      return_to = Settings.default_redirect_after_login if return_to.blank? || return_to.match(/\/users\/auth\//)
       logger.debug "last step : #{return_to} || #{request.referer} || #{Settings.default_redirect_after_login} || #{root_path}"
       return return_to || request.referer || Settings.default_redirect_after_login || root_path
     end

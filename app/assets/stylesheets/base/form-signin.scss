@@ -13,7 +13,7 @@
       text-decoration: underline;
       &.btn-social {
         color: #fff;
-        &.btn-shibboleth {
+        &.btn-shibboleth, &.btn-ldap {
           color: #555;
         }
       }
@@ -179,4 +179,3 @@ body.login {
   // logo is 30px height
   padding: 10px 15px;
 }
-
