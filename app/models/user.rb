@@ -135,6 +135,26 @@ class User < ActiveRecord::Base
   end
 
   #
+  # override devise methods to use pbkdf2 encoding
+  # SEE http://www.davidverhasselt.com/how-to-migrate-passwords-from-legacy-systems-to-devise/
+  #
+
+  def valid_password?(password)
+    auth_result = super
+    if auth_result && ( self.pbkdf2_password.blank? || !PBKDF2PasswordHelper.pbkdf2_compare(self.pbkdf2_password, password) )
+      self.pbkdf2_password = PBKDF2PasswordHelper.pbkdf2_encode(password)
+      save!
+    end
+    auth_result
+  end
+
+  def update_pbkdf2_password
+    #
+    # action to store after update
+    #
+  end
+
+  #
   # csv export
   #
   def self.to_csv
